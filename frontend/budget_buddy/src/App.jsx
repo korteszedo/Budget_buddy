@@ -1,12 +1,10 @@
-
-import { Navigacio } from './Navigacio'
 import './App.css'
-
+import { Kezdolap } from './pages/Kezdolap'
 function App() {
 
   return (
     <>
-      <Navigacio/>
+      <Kezdolap/>
     </>
   )
 }
