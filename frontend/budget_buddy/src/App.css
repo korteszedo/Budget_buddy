@@ -1,10 +1,58 @@
-img{
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#fooladl_logo{
   width: 201px;
   height: 134px;
 }
 
-.navigacio{
+/* HEADER */
+.fooldal_div {
+  background-color: #D2BFA6;
   display: flex;
-  
-  align-items: baseline;
+  justify-content: space-between;   /* BAL LOGÓ – JOBB GOMBOK */
+  align-items: center;
+  padding: 10px 20px;
+  border-bottom: 6px solid #4B5865;
+  width: 100%;
+}
+
+/* GOMBOK WRAPPER */
+.fejlec_gombok {
+  display: flex;
+  gap: 15px;     /* Távolság a gombok között */
+}
+
+/* ALAP GOMB */
+.fooldal_gomb {
+  display: flex;
+  align-items: center;
+  gap: 6px;             /* Ikon és szöveg közti távolság */
+  background-color: #226EA4;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* GOMB IKONOK */
+.fooldal_gomb img {
+  width: 18px;
+  height: 18px;
+}
+
+/* HOVER */
+.fooldal_gomb:hover {
+  background-color: #135a85;
+}
+
+#bejelentkezes{
+  background-color: #0F74C5;
+  color: black;
 }
