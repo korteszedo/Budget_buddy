@@ -1,7 +1,7 @@
 import './App.css'
 import { Kezdolap } from './pages/Kezdolap'
-function App() {
 
+function App() {
   return (
     <>
       <Kezdolap/>
@@ -10,3 +10,4 @@ function App() {
 }
 
 export default App
+
