@@ -65,7 +65,7 @@ export function Kezdolap() {
         </p>
       </div>
 
-      <div className="box">
+      <div id='middle-box'>
         <h3>Befektetés és kamatszámítás</h3>
         <p>
           Használd a beépített kalkulátort, 
