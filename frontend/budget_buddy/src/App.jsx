@@ -1,5 +1,6 @@
 import './App.css'
-import { Kezdolap } from './pages/Kezdolap'
+import  './pages/kezdolap/kezdolap.css'
+import { Kezdolap } from './pages/kezdolap/Kezdolap'
 
 function App() {
   return (

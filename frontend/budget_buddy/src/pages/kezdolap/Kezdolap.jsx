@@ -1,18 +1,21 @@
 import { useState } from 'react'
+import { Login } from '../login/Login'
 
-import logo from "../img/logo.png"
-import login from "../img/login.png"
-import test1 from "../img/test1.png"
-import test2 from "../img/test2.png"
-import test3 from "../img/test3.png"
-import right_arrow from "../img/right-arrow.png"
-import registration from "../img/registration.png"
+import logo from "../../img/logo.png"
+import login from "../../img/login.png"
+import test1 from "../../img/test1.png"
+import test2 from "../../img/test2.png"
+import test3 from "../../img/test3.png"
+import right_arrow from "../../img/right-arrow.png"
+import registration from "../../img/registration.png"
 
 
 export function Kezdolap() {
 
   const images = [test1, test2, test3];
+
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [megjelenit, setMegjelenit] = useState(false)
 
   const nextImage = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -32,10 +35,13 @@ export function Kezdolap() {
             Regisztráció
           </button>
 
-          <button className="fooldal_gomb" id="bejelentkezes">
+          <button className="fooldal_gomb" id="bejelentkezes" onClick={() => setMegjelenit(true)} >
             <img src={login} alt="" />
             Bejelentkezés
           </button>
+
+          {megjelenit && (<Login nyit_zar={() => setMegjelenit(false)} />)}
+
         </div>
 
       </div>
