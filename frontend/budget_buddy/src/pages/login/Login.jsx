@@ -1,10 +1,14 @@
 import "./login.css"
-import { useRef, useState } from "react";
+import { useRef, useState} from "react";
+import { Register } from "../register/Register";
 
 import userInterface from "../../img/user-interface.png"
 import back_arrow from "../../img/back-arrow.png"
 
 export function Login({ nyit_zar }) {
+
+  const [registershow, setRegistershow] = useState(false)
+
   const emailInput = useRef();
   const passInput = useRef();
 
@@ -31,9 +35,11 @@ export function Login({ nyit_zar }) {
           Bejelentkezés
         </button>
 
-        <p className="no-account">Még nincs fiókod?</p>
+        <p className="no-account" onClick={()=> setRegistershow(true)}>
+          Még nincs fiókod?
+        </p>
       </div>
-
+      {registershow && (<Register nyit_zar_register={() => setRegistershow(false)} />)}
     </div>
   );
 }
