@@ -1,9 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const router = (0, express_1.Router)();
-router.get("/", (req, res) => {
-    console.log("asdsadasdsa");
-    res.send("a szerver fut");
-});
+var express_1 = require("express");
+var authroutes_1 = __importDefault(require("../auth/authroutes"));
+var router = (0, express_1.Router)();
+router.use("/auth", authroutes_1.default);
 exports.default = router;

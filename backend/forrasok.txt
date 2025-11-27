@@ -1,0 +1,8 @@
+
+
+elso lepes :
+createpool:https://sidorares.github.io/node-mysql2/docs
+users/userService loginUser function 
+
+masodik: auth/authController loginController function
+res.json https://dev-aditya.medium.com/understanding-when-to-use-return-res-json-in-express-937cb2f5da93
