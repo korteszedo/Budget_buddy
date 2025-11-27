@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Login } from '../login/Login'
+import { Register } from '../register/Register'
 
 import logo from "../../img/logo.png"
 import login from "../../img/login.png"
@@ -13,9 +14,11 @@ import registration from "../../img/registration.png"
 export function Kezdolap() {
 
   const images = [test1, test2, test3];
-
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [megjelenit, setMegjelenit] = useState(false)
+
+
+  const [loginshow, setLoginshow] = useState(false);
+  const [registershow, setRegisterShow] = useState(false)
 
   const nextImage = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -30,17 +33,20 @@ export function Kezdolap() {
         </div>
 
         <div className="fejlec_gombok">
-          <button className="fooldal_gomb">
+          <button className="fooldal_gomb" onClick={()=> setRegisterShow(true)} >
             <img src={registration} alt="" />
             Regisztráció
           </button>
 
-          <button className="fooldal_gomb" id="bejelentkezes" onClick={() => setMegjelenit(true)} >
+          {registershow && (<Register nyit_zar_register={()=> setRegisterShow(false)} />)}
+
+
+          <button className="fooldal_gomb" id="bejelentkezes" onClick={() => setLoginshow(true)} >
             <img src={login} alt="" />
             Bejelentkezés
           </button>
 
-          {megjelenit && (<Login nyit_zar={() => setMegjelenit(false)} />)}
+          {loginshow && (<Login nyit_zar={() => setLoginshow(false)} />)}
 
         </div>
 
