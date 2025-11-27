@@ -1,10 +1,13 @@
 import { Router } from "express";
- 
-const router = Router()
+import authRoutes from "../auth/authroutes";
 
-router.get("/",(req,res)=>{
-    
-    res.send("a szerver fut")
-})
 
-export default router
+const router = Router();
+
+router.use("/auth", authRoutes);
+router.get("/",(req,res)=>{res.send("futbazdmeg")})
+
+
+
+export default router;
+

@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = require("express");
+var authController_1 = require("./authController");
+console.log("🔥 AUTH ROUTES BETÖLTÖTT!");
+console.log("loginController =", authController_1.loginController);
+var router = (0, express_1.Router)();
+router.post("/login", authController_1.loginController);
+console.log("🔥 AUTH ROUTEOK:", router.stack);
+exports.default = router;
