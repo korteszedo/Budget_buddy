@@ -1,4 +1,5 @@
 import './register.css'
+import { registration, listUsers } from '../../functions/registration';
 import userInterface from "../../img/user-interface.png"
 import back_arrow from "../../img/back-arrow.png"
 import { useRef, useState } from "react";
@@ -14,16 +15,21 @@ export function Register({nyit_zar_register}){
 
 
     function handleClick(){
-        console.log(emailInput.current.value)
-        console.log(usernameInput.current.value)
-        console.log(passInput.current.value)
+
+        let email = emailInput.current.value;
+        let username = usernameInput.current.value;
+        let jelszo = passInput.current.value;
+
+
+        registration(email, username, jelszo);
+        console.log(listUsers())
     }
 
 
     return(
         <div className='register-box'>
             
-            {!loginshow && (
+            
                 <div>
                     <div className="register-header">
                         <button className="register_back-btn" onClick={nyit_zar_register}>
@@ -46,7 +52,7 @@ export function Register({nyit_zar_register}){
                         </p>
                     </div>
                 </div>
-            )}
+           
     
             {loginshow && (
                 <Login nyit_zar={() => setLoginshow(false)} />
