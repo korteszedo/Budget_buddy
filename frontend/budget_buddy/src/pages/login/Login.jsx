@@ -1,11 +1,12 @@
 import "./login.css"
-import { useRef, useState} from "react";
+import { login } from "../../functions/registration";
+import { useRef, useState } from "react";
 import { Register } from "../register/Register";
 
 import userInterface from "../../img/user-interface.png"
 import back_arrow from "../../img/back-arrow.png"
 
-export function Login({ nyit_zar }) {
+export function Login({ nyit_zar, onSuccess }) {
 
   const [registershow, setRegistershow] = useState(false)
 
@@ -13,8 +14,18 @@ export function Login({ nyit_zar }) {
   const passInput = useRef();
 
   function handleClick() {
-    console.log(emailInput.current.value);
-    console.log(passInput.current.value);
+    const email = emailInput.current.value;
+    const jelszo = passInput.current.value;
+
+    const sikeres = login(jelszo, email);
+
+    if (sikeres) {
+      onSuccess();
+    }
+    else{
+      alert("Bejelentkezés Sikertelen")
+    }
+    
   }
 
   return (
@@ -22,24 +33,40 @@ export function Login({ nyit_zar }) {
 
       <div className="login-header">
         <button className="back-btn" onClick={nyit_zar}>
-            <img src={back_arrow} alt="" className="back-arrow" />
+          <img src={back_arrow} alt="" className="back-arrow" />
         </button>
       </div>
-            
+
       <div className="login-content">
         <img src={userInterface} alt="" className="user-icon" />
-        <input type="text" placeholder="Email cím" ref={emailInput} className="input" />
-        <input type="password" placeholder="Jelszó" ref={passInput} className="input" />
+
+        <input 
+          type="text" 
+          placeholder="Email cím" 
+          ref={emailInput} 
+          className="input" 
+        />
+
+        <input 
+          type="password" 
+          placeholder="Jelszó" 
+          ref={passInput} 
+          className="input" 
+        />
 
         <button className="login-button" onClick={handleClick}>
           Bejelentkezés
         </button>
 
-        <p className="no-account" onClick={()=> setRegistershow(true)}>
+        <p className="no-account" onClick={() => setRegistershow(true)}>
           Még nincs fiókod?
         </p>
       </div>
-      {registershow && (<Register nyit_zar_register={() => setRegistershow(false)} />)}
+
+      {registershow && (
+        <Register nyit_zar_register={() => setRegistershow(false)} />
+      )}
+
     </div>
   );
 }
