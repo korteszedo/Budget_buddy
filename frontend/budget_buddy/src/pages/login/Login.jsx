@@ -1,5 +1,4 @@
 import "./login.css"
-import { login } from "../../functions/registration";
 import { useRef, useState } from "react";
 import { Register } from "../register/Register";
 
@@ -17,16 +16,24 @@ export function Login({ nyit_zar, onSuccess }) {
     const email = emailInput.current.value;
     const jelszo = passInput.current.value;
 
-    const sikeres = login(jelszo, email);
-
-    if (sikeres) {
-      onSuccess();
-    }
-    else{
-      alert("Bejelentkezés Sikertelen")
-    }
-    
-  }
+    fetch("http://localhost:3000/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+      email: email,
+      password: jelszo,
+    }),
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log("Válasz:", data);
+    })
+    .catch(err => {
+      console.log("Hiba:", err);
+    });
+}
 
   return (
     <div className="login-box">
