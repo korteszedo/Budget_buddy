@@ -1,5 +1,4 @@
 import './register.css'
-import { registration, listUsers } from '../../functions/registration';
 import userInterface from "../../img/user-interface.png"
 import back_arrow from "../../img/back-arrow.png"
 import { useRef, useState } from "react";
@@ -20,9 +19,6 @@ export function Register({nyit_zar_register}){
         let username = usernameInput.current.value;
         let jelszo = passInput.current.value;
 
-
-        registration(email, username, jelszo);
-        console.log(listUsers())
     }
 
 

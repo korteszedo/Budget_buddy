@@ -10,7 +10,7 @@ import test3 from "../../img/test3.png"
 import right_arrow from "../../img/right-arrow.png"
 import registration from "../../img/registration.png"
 
-export function Kezdolap({ setLoggedIn }) {
+export function Kezdolap() {
 
   const images = [test1, test2, test3];
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -46,7 +46,6 @@ export function Kezdolap({ setLoggedIn }) {
           {loginshow && (
             <Login 
               nyit_zar={() => setLoginshow(false)} 
-              onSuccess={() => setLoggedIn(true)}
             />
           )}
 
