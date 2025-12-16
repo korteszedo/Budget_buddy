@@ -63,7 +63,9 @@ function loginController(req, res) {
                 case 3:
                     err_1 = _b.sent();
                     console.error(err_1);
-                    return [3 /*break*/, 4];
+                    return [2 /*return*/, res.status(500).json({
+                            message: "Szerver hiba"
+                        })];
                 case 4: return [2 /*return*/];
             }
         });

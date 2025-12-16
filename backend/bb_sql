@@ -1,0 +1,48 @@
+CREATE TABLE Szerepkor (
+   szerepkor_id INT AUTO_INCREMENT PRIMARY KEY,
+   szerepkor_nev VARCHAR(50) NOT NULL
+);
+CREATE TABLE Felhasznalo (
+   felhasznalo_id INT AUTO_INCREMENT PRIMARY KEY,
+   nev VARCHAR(100) NOT NULL,
+   email VARCHAR(100) NOT NULL UNIQUE,
+   jelszo VARCHAR(255) NOT NULL,
+   szerepkor_id INT NOT NULL,
+   FOREIGN KEY (szerepkor_id) REFERENCES Szerepkor(szerepkor_id)
+       ON DELETE RESTRICT
+       ON UPDATE CASCADE
+);
+
+CREATE FUNCTION pwd_encrypt(pwd VARCHAR(255))
+RETURNS VARCHAR(255) DETERMINISTIC
+RETURN SHA2(CONCAT(pwd,'sozas'),256);
+
+
+CREATE TRIGGER insert_user 
+BEFORE INSERT ON Felhasznalo
+FOR EACH ROW 
+SET NEW.jelszo = pwd_encrypt(NEW.jelszo);
+
+CREATE FUNCTION login(email VARCHAR(100), pwd VARCHAR(100))
+RETURNS INTEGER DETERMINISTIC
+BEGIN
+    DECLARE ok INT DEFAULT 0;
+
+    SELECT felhasznalo_id INTO ok
+    FROM Felhasznalo
+    WHERE Felhasznalo.email = email
+      AND Felhasznalo.jelszo = pwd_encrypt(pwd);
+
+    RETURN ok;
+END;
+
+INSERT INTO Szerepkor (szerepkor_nev)
+VALUES 
+  ("admin"),
+  ("user");
+
+INSERT INTO Felhasznalo (nev, email, jelszo, szerepkor_id)
+VALUES ("Teszt Elek", "teszt@gmail.com", "titok", 1);
+
+SELECT login("teszt@gmail.com", "titok");
+

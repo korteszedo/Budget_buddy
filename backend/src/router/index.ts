@@ -5,7 +5,7 @@ import authRoutes from "../auth/authroutes";
 const router = Router();
 
 router.use("/auth", authRoutes);
-router.get("/",(req,res)=>{res.send("futbazdmeg")})
+router.get("/",(_req,res)=>{res.send("futbazdmeg")})
 
 
 
