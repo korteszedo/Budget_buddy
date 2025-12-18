@@ -3,7 +3,7 @@ import "./navigacio.css"
 import logo from "../../img/logo.png"
 import home from "../../img/home.png"
 import exit from "../../img/exit.png"
-import { NavLink } from "react-router-dom"
+import { NavLink, Link } from "react-router-dom"
 
 export default function Navigacio(){
     return(
@@ -25,9 +25,9 @@ export default function Navigacio(){
                 </li>
 
                 <li>
-                    <NavLink to="/fooldal">
+                    <Link to="/fooldal">
                         <img src={home} alt="Home_icon"/>
-                    </NavLink>
+                    </Link>
                 </li>
 
                 <li className="text">
