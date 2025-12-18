@@ -1,11 +1,11 @@
 import Navigacio from "../components/navigacio/Navigacio"
 
 
-export default function Grafikonok(){
+export default function Tervek(){
     return (
         <div>
             <Navigacio/>
-            <h1>Gradikonok</h1>
+            <h1>Célok</h1>
         </div>
-    );
+    )
 }
