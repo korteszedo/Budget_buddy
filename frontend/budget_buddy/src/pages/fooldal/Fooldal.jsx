@@ -1,33 +1,38 @@
-import { useEffect } from "react"
+import "./fooldal.css"
 import Navigacio from "../../components/navigacio/Navigacio"
-import {
-    getBalance,
-    getTransactionList,
-    getExpensesByCategory,
-    getGoals,
-} from "../../fetch"
+import BalanceCard from "../../components/fooldal/BalanceCard/BalanceCard"
+import NewTransactionCard from "../../components/fooldal/NewTransactionCard/NewTransactionCard"
+import TransactionsCard from "../../components/fooldal/TransactionsCard/TransactionsCard"
+import ExpensesCard from "../../components/fooldal/ExpensesCard/ExpensesCard"
+import GoalsCard from "../../components/fooldal/GoalsCard/GoalsCard"
 
+export function Fooldal() {
+    const displayName = localStorage.getItem("userName") || "Alex"
 
-export function Fooldal(){
-    useEffect(() => {
-        const userId = localStorage.getItem("userId")
-        if (!userId) {
-            console.log("Nincs userId, nem futnak a fetch-ek.")
-            return
-        }
+    return (
+        <div className="fooldal-page">
+            <Navigacio />
 
-        getBalance(userId).then((data) => console.log("balance:", data))
-        getTransactionList(userId).then((data) => console.log("list:", data))
-        getExpensesByCategory(userId).then((data) =>
-            console.log("expenses-by-category:", data)
-        )
-        getGoals(userId).then((data) => console.log("goals:", data))
-    }, [])
+            <main className="fooldal-main">
+                <div className="fooldal-title">Udvozlunk {displayName}</div>
 
-    return(
-        <div>
-            <Navigacio/>
-            <h1>dasdsd</h1>
+                <section className="fooldal-hero">
+                    <BalanceCard />
+                    <NewTransactionCard />
+                    <TransactionsCard />
+                </section>
+
+                <div className="fooldal-section-title">Attekintes</div>
+
+                <section className="fooldal-overview">
+                    <ExpensesCard />
+                    <GoalsCard />
+                </section>
+
+                <div className="fooldal-footer">
+                    Erd el az anyagi fuggetlenseget
+                </div>
+            </main>
         </div>
     )
 }

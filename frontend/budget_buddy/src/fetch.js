@@ -10,10 +10,7 @@ export function login(email, password) {
     }),
   })
     .then((res) => res.json())
-    .then((data) => {
-      console.log("Valasz:", data);
-      return data;
-    })
+    .then((data) => data)
     .catch((err) => {
       console.log("Hiba:", err);
     });
@@ -22,10 +19,7 @@ export function login(email, password) {
 export function getBalance(userId) {
   return fetch(`http://localhost:3000/transactions/balance/${userId}`)
     .then((res) => res.json())
-    .then((data) => {
-      console.log("Valasz:", data);
-      return data;
-    })
+    .then((data) => data)
     .catch((err) => {
       console.log("Hiba:", err);
     });
@@ -34,10 +28,7 @@ export function getBalance(userId) {
 export function getSums(userId) {
   return fetch(`http://localhost:3000/transactions/sums/${userId}`)
     .then((res) => res.json())
-    .then((data) => {
-      console.log("Valasz:", data);
-      return data;
-    })
+    .then((data) => data)
     .catch((err) => {
       console.log("Hiba:", err);
     });
@@ -47,10 +38,7 @@ export function getSums(userId) {
 export function getTransactionList(userId) {
   return fetch(`http://localhost:3000/transactions/list/${userId}`)
     .then((res) => res.json())
-    .then((data) => {
-      console.log("Valasz:", data);
-      return data;
-    })
+    .then((data) => data)
     .catch((err) => {
       console.log("Hiba:", err);
     });
@@ -61,10 +49,7 @@ export function getExpensesByCategory(userId) {
     `http://localhost:3000/transactions/expenses-by-category/${userId}`
   )
     .then((res) => res.json())
-    .then((data) => {
-      console.log("Valasz:", data);
-      return data;
-    })
+    .then((data) => data)
     .catch((err) => {
       console.log("Hiba:", err);
     });
@@ -73,10 +58,7 @@ export function getExpensesByCategory(userId) {
 export function getGoals(userId) {
   return fetch(`http://localhost:3000/goals/${userId}`)
     .then((res) => res.json())
-    .then((data) => {
-      console.log("Valasz:", data);
-      return data;
-    })
+    .then((data) => data)
     .catch((err) => {
       console.log("Hiba:", err);
     });
