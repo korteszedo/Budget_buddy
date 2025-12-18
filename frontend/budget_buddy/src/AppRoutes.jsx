@@ -1,7 +1,7 @@
 import { Fooldal } from "./pages/fooldal/Fooldal"
 import { Kezdolap } from "./pages/kezdolap/Kezdolap"
 import Admin from "./pages/Admin"
-import Celok from "./pages/Celok"
+import Tervek from "./pages/Tervek"
 import Grafikonok from "./pages/Grafikonok"
 
 
@@ -19,11 +19,11 @@ const router = [
         element: <Admin/>
     },
     {
-        path: "/celok",
-        element: <Celok/>
+        path: "/tervek",
+        element: <Tervek/>
     },
     {
-        path: "/gradikonok",
+        path: "/grafikonok",
         element: <Grafikonok/>
     },
 ]
