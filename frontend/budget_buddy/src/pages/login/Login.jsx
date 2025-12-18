@@ -1,11 +1,16 @@
 import "./login.css"
+import { Link } from "react-router-dom";
 import { useRef, useState } from "react";
 import { Register } from "../register/Register";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../fetch";
 
 import userInterface from "../../img/user-interface.png"
 import back_arrow from "../../img/back-arrow.png"
 
 export function Login({ nyit_zar, onSuccess }) {
+
+  const navigate = useNavigate()
 
   const [registershow, setRegistershow] = useState(false)
 
@@ -16,24 +21,14 @@ export function Login({ nyit_zar, onSuccess }) {
     const email = emailInput.current.value;
     const jelszo = passInput.current.value;
 
-    fetch("http://localhost:3000/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-      email: email,
-      password: jelszo,
-    }),
-    })
-    .then(res => res.json())
-    .then(data => {
-      console.log("Válasz:", data);
-    })
-    .catch(err => {
-      console.log("Hiba:", err);
+    login(email, jelszo).then((data) => {
+      if (data && data.userId) {
+        localStorage.setItem("userId", data.userId);
+        navigate("/fooldal")
+      }
     });
-}
+  
+  }
 
   return (
     <div className="login-box">
