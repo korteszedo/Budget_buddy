@@ -26,7 +26,8 @@ export async function getTransactionList(userId: number) {
     `
     SELECT
       osszeg,
-      tipus
+      tipus,
+      datum
     FROM Tranzakcio
     WHERE felhasznalo_id = ?
     ORDER BY datum DESC
@@ -35,6 +36,66 @@ export async function getTransactionList(userId: number) {
   );
 
   return rows;
+}
+
+export async function updateTransactionForRole2(
+  userId: number,
+  transactionId: number,
+  osszeg?: number,
+  tipus?: string,
+  datum?: string
+) {
+  const updates: string[] = [];
+  const values: Array<number | string> = [];
+
+  if (typeof osszeg !== "undefined") {
+    updates.push("t.osszeg = ?");
+    values.push(osszeg);
+  }
+  if (typeof tipus !== "undefined") {
+    updates.push("t.tipus = ?");
+    values.push(tipus);
+  }
+  if (typeof datum !== "undefined") {
+    updates.push("t.datum = ?");
+    values.push(datum);
+  }
+
+  if (updates.length === 0) {
+    return 0;
+  }
+
+  values.push(transactionId, userId);
+
+  const [result]: any = await db.query(
+    `
+    UPDATE Tranzakcio t
+    JOIN Felhasznalo f ON f.felhasznalo_id = t.felhasznalo_id
+    SET ${updates.join(", ")}
+    WHERE t.tranzakcio_id = ?
+      AND f.felhasznalo_id = ?
+      AND f.szerepkor_id = 2
+    `,
+    values
+  );
+
+  return result.affectedRows ?? 0;
+}
+
+export async function deleteTransactionForRole2(userId: number, transactionId: number) {
+  const [result]: any = await db.query(
+    `
+    DELETE t
+    FROM Tranzakcio t
+    JOIN Felhasznalo f ON f.felhasznalo_id = t.felhasznalo_id
+    WHERE t.tranzakcio_id = ?
+      AND f.felhasznalo_id = ?
+      AND f.szerepkor_id = 2
+    `,
+    [transactionId, userId]
+  );
+
+  return result.affectedRows ?? 0;
 }
 
 
@@ -56,5 +117,9 @@ export async function getExpenseSumsByCategory(userId: number) {
   );
 
   return rows;
+}
+
+export async function getExpensesByCategory(userId: number) {
+  return getExpenseSumsByCategory(userId);
 }
 

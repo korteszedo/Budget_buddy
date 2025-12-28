@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { loginUser } from "../users/userServices";
+import { loginUser, registerUser } from "../users/userServices";
 
 export async function loginController(req: Request, res: Response) {
  const { email, password } = req.body;
@@ -23,5 +23,19 @@ export async function loginController(req: Request, res: Response) {
         return res.status(500).json({
             message: "Szerver hiba"
         });
+    }
+}
+
+export async function registerController(req: Request, res: Response) {
+    const name = req.body.name ?? req.body.username;
+    const email = req.body.email;
+    const password = req.body.password ?? req.body.jelszo;
+
+    try {
+        const userId = await registerUser(name, email, password);
+        return res.json({ userId });
+    } catch (err) {
+        console.error(err);
+        return res.json({ userId: 0 });
     }
 }
