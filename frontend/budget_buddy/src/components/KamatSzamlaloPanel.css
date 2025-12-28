@@ -1,0 +1,55 @@
+.kamat-panel {
+    background-color: #2a78b6;
+    color: #ffffff;
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.35);
+}
+
+.kamat-title {
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.kamat-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.kamat-input {
+    width: 100%;
+    padding: 10px 12px;
+    background-color: #1f82db;
+    border: none;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 12px;
+}
+
+.kamat-input::placeholder {
+    color: #d5e7ff;
+}
+
+.kamat-result {
+    background-color: #1f82db;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.kamat-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #d2a059;
+    border: 2px solid #2d2d2d;
+    border-radius: 8px;
+    color: #1e1e1e;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
