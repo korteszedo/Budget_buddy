@@ -3,10 +3,7 @@ import { useEffect, useState } from "react"
 import { getGoals } from "../../../fetch"
 
 function formatFt(value) {
-    const number = Number(value)
-    if (!Number.isFinite(number)) {
-        return "0 Ft"
-    }
+    const number = Number(value) || 0
     return `${number.toLocaleString("hu-HU")} Ft`
 }
 
@@ -20,20 +17,22 @@ export default function GoalsCard() {
         }
 
         getGoals(userId).then((data) => {
-            setGoals(Array.isArray(data) ? data : [])
+            if (Array.isArray(data)) {
+                setGoals(data.slice(0, 2))
+            } else {
+                setGoals([])
+            }
         })
     }, [])
-
-    const items = goals.slice(0, 2)
 
     return (
         <div className="fooldal-overview-card goals-card">
             <div className="overview-title">Celok</div>
             <div className="goals-list">
-                {items.length === 0 ? (
+                {goals.length === 0 ? (
                     <div className="fooldal-empty">Nincs adat</div>
                 ) : (
-                    items.map((goal, index) => {
+                    goals.map((goal, index) => {
                         const current = Number(goal.aktualis) || 0
                         const target = Number(goal.cel) || 0
                         const progress =

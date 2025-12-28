@@ -3,10 +3,7 @@ import { useEffect, useState } from "react"
 import { getExpensesByCategory } from "../../../fetch"
 
 function formatFt(value) {
-    const number = Number(value)
-    if (!Number.isFinite(number)) {
-        return "0 Ft"
-    }
+    const number = Number(value) || 0
     return `${number.toLocaleString("hu-HU")} Ft`
 }
 
@@ -20,20 +17,22 @@ export default function ExpensesCard() {
         }
 
         getExpensesByCategory(userId).then((data) => {
-            setExpenses(Array.isArray(data) ? data : [])
+            if (Array.isArray(data)) {
+                setExpenses(data.slice(0, 4))
+            } else {
+                setExpenses([])
+            }
         })
     }, [])
-
-    const items = expenses.slice(0, 4)
 
     return (
         <div className="fooldal-overview-card expenses-card">
             <div className="overview-title">Kiadasok</div>
             <div className="expenses-grid">
-                {items.length === 0 ? (
+                {expenses.length === 0 ? (
                     <div className="fooldal-empty">Nincs adat</div>
                 ) : (
-                    items.map((item, index) => (
+                    expenses.map((item, index) => (
                         <div
                             className="expenses-item"
                             key={`${item.kategoria}-${index}`}

@@ -3,10 +3,7 @@ import { useEffect, useState } from "react"
 import { getBalance } from "../../../fetch"
 
 function formatFt(value) {
-    const number = Number(value)
-    if (!Number.isFinite(number)) {
-        return "0 Ft"
-    }
+    const number = Number(value) || 0
     return `${number.toLocaleString("hu-HU")} Ft`
 }
 
@@ -20,11 +17,7 @@ export default function BalanceCard() {
         }
 
         getBalance(userId).then((data) => {
-            const nextBalance =
-                data && typeof data.egyenleg !== "undefined"
-                    ? data.egyenleg
-                    : 0
-            setBalance(nextBalance)
+            setBalance((data && data.egyenleg) || 0)
         })
     }, [])
 

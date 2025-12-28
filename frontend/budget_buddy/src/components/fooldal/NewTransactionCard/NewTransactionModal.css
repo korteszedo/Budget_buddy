@@ -1,0 +1,112 @@
+.transaction-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 360px;
+    max-width: calc(100% - 32px);
+    background-color: #d2b085;
+    border-radius: 18px;
+    padding: 16px 18px 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    z-index: 20;
+}
+
+.transaction-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.transaction-logo {
+    height: 46px;
+}
+
+.transaction-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 999px;
+    background-color: #0084ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.transaction-close img {
+    width: 26px;
+    height: 26px;
+}
+
+.transaction-type {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.transaction-type-btn {
+    background-color: #1f82db;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.transaction-type-btn.is-active {
+    background-color: #0f6ec2;
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.transaction-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.transaction-input {
+    width: 100%;
+    padding: 10px 12px;
+    background-color: #1f82db;
+    border: none;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 12px;
+}
+
+.transaction-input::placeholder {
+    color: #d5e7ff;
+}
+
+.transaction-submit {
+    width: 100%;
+    padding: 10px;
+    background-color: #0084ff;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 4px;
+}
+
+@media (max-width: 600px) {
+    .transaction-modal {
+        width: 320px;
+    }
+
+    .transaction-logo {
+        height: 40px;
+    }
+}

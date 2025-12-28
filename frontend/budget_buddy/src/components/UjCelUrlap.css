@@ -1,0 +1,96 @@
+.ujcel-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 360px;
+    max-width: calc(100% - 32px);
+    padding: 18px 20px 22px;
+    background-color: #d2b085;
+    border-radius: 18px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    z-index: 20;
+}
+
+.ujcel-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6px;
+}
+
+.ujcel-logo {
+    height: 48px;
+}
+
+.ujcel-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 999px;
+    background-color: #0084ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.ujcel-close img {
+    width: 26px;
+    height: 26px;
+}
+
+.ujcel-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #1e1e1e;
+}
+
+.ujcel-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ujcel-input {
+    width: 100%;
+    padding: 10px 12px;
+    background-color: #1f82db;
+    border: none;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 12px;
+}
+
+.ujcel-input::placeholder {
+    color: #d5e7ff;
+}
+
+.ujcel-submit {
+    width: 100%;
+    padding: 10px;
+    background-color: #0084ff;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 2px;
+}
+
+@media (max-width: 600px) {
+    .ujcel-box {
+        width: 320px;
+    }
+
+    .ujcel-logo {
+        height: 40px;
+    }
+}

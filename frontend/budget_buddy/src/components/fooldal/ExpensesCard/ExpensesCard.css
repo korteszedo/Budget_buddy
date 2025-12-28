@@ -1,11 +1,11 @@
 .expenses-card {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 }
 
 .overview-title {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 700;
     text-align: center;
 }
@@ -13,7 +13,7 @@
 .expenses-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
+    gap: 10px;
 }
 
 .expenses-item {
@@ -22,8 +22,8 @@
     gap: 8px;
     font-size: 12px;
     font-weight: 700;
-    padding-bottom: 6px;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.85);
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.75);
 }
 
 .expenses-name {

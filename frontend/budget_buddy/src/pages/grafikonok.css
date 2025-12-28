@@ -1,0 +1,143 @@
+.grafikonok-page {
+    min-height: 100vh;
+    background-color: #d2bfa6;
+    color: #1e1e1e;
+}
+
+.grafikonok-main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 20px 40px 28px;
+}
+
+.grafikonok-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 14px 0 10px;
+}
+
+.grafikonok-top {
+    margin-bottom: 14px;
+}
+
+.grafikonok-card {
+    background-color: #2a78b6;
+    border-radius: 12px;
+    padding: 14px;
+    color: #ffffff;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.35);
+}
+
+.grafikonok-card-title {
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.grafikonok-card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.grafikonok-range {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.grafikonok-range-btn {
+    background-color: #1f82db;
+    color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.grafikonok-range-btn.is-active {
+    background-color: #0f6ec2;
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.grafikonok-chart {
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    padding: 12px;
+    border: 2px solid #2d2d2d;
+}
+
+.grafikonok-chart canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.grafikonok-chart-large {
+    height: 300px;
+}
+
+.grafikonok-chart-small {
+    height: 230px;
+}
+
+.grafikonok-chart-pie {
+    height: 230px;
+}
+
+.grafikonok-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 14px;
+}
+
+.grafikonok-footer {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+@media (max-width: 1100px) {
+    .grafikonok-main {
+        padding: 18px 24px 24px;
+    }
+
+    .grafikonok-chart-large {
+        height: 270px;
+    }
+}
+
+@media (max-width: 799px) {
+    .grafikonok-main {
+        padding: 16px 18px 24px;
+    }
+
+    .grafikonok-title {
+        font-size: 20px;
+    }
+
+    .grafikonok-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .grafikonok-chart-large {
+        height: 240px;
+    }
+
+    .grafikonok-chart-small,
+    .grafikonok-chart-pie {
+        height: 210px;
+    }
+}
+
+@media (max-width: 480px) {
+    .grafikonok-range-btn {
+        padding: 5px 10px;
+        font-size: 11px;
+    }
+}
