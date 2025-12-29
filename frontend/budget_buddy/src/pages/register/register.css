@@ -1,97 +1,105 @@
-
 .register-box {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 542px;
-    height: 572px;
-    padding-bottom: 30px;
-    background-color: #D2B085;
-    border-radius: 20px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-    text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(520px, calc(100% - 32px));
+  padding: 20px 24px 26px;
+  background-color: var(--bb-surface);
+  border-radius: var(--bb-radius-lg);
+  border: 3px solid var(--bb-border);
+  box-shadow: var(--bb-shadow-soft);
+  text-align: center;
+  z-index: 20;
+}
+
+.register-box::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: -1;
+}
+
+.register-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.back-arrow {
+  width: 28px;
+  height: 28px;
+}
+
+.user-icon {
+  width: 96px;
+  height: 96px;
+  margin: 6px auto 10px;
+}
+
+.register_back-btn {
+  width: 54px;
+  height: 54px;
+  border: 2px solid var(--bb-border);
+  background-color: var(--bb-card-light);
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.register-content {
+  padding: 0 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.input {
+  width: 100%;
+  padding: 14px 16px;
+  background-color: var(--bb-card-light);
+  border: 2px solid var(--bb-border);
+  border-radius: 10px;
+  color: var(--bb-white);
+  font-size: 15px;
+}
+
+.input::placeholder {
+  color: #d5e7ff;
+}
+
+.register-button {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--bb-accent);
+  color: var(--bb-text);
+  border: 2px solid var(--bb-border);
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-top: 6px;
+}
+
+.login-account {
+  font-size: 14px;
+  text-decoration: underline;
+  color: var(--bb-text-muted);
+  margin-top: 4px;
+  cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .register-box {
+    padding: 18px 18px 22px;
   }
-  
-  
-  .register-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-  }
-  
-  .back-arrow{
-      width: 42px;
-      height: 42px;
-  }
-  
-  
+
   .user-icon {
-    width: 105px;
-    height: 105px;
+    width: 80px;
+    height: 80px;
   }
-  
-  
-  .register_back-btn {
-    width: 60px;
-    height: 58px;
-    border: none;
-    background-color: #0084FF;
-    border-radius: 100%;
-    font-size: 22px;
-    margin-left: 440px;
-  }
-  
-  .register_back-btn:hover{
-      scale: 102%;
-  }
-  
-  
-  .register-content {
-    padding: 10px 40px;
-  }
-  
-  .input {
-    width: 100%;
-    padding: 16px;
-    background-color: #1F82DB;
-    border: none;
-    border-radius: 8px;
-    margin-top: 20px;
-    color: white;
-    font-size: 16px;
-  }
-  
-  .input::placeholder {
-    color: #d5e7ff;
-  }
-  
-  
-  .register-button {
-    width: 100%;
-    padding: 14px;
-    background-color: #0084FF;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 17px;
-    margin-top: 30px;
-  }
-  
-  .register-button:hover{
-      scale: 102%;
-  }
-  
-  
-  .login-account {
-    font-size: 16px;
-    text-decoration: underline;
-    color: #3a2c24;
-    margin-top: 2px;
-    cursor: pointer;
-  }
-  
-  .login-account:hover{
-      scale: 110%;
-  }
+}
