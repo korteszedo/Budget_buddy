@@ -23,7 +23,7 @@ export function Kezdolap() {
   };
 
   return (
-    <div className="container">
+    <div className="kezdolap">
       <div className="fooldal_fejlec_div">
 
         <div className="fejlec_logo">

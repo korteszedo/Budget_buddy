@@ -3,14 +3,22 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 360px;
-    max-width: calc(100% - 32px);
+    width: min(420px, calc(100% - 32px));
     padding: 18px 20px 22px;
-    background-color: #d2b085;
-    border-radius: 18px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    background-color: var(--bb-surface);
+    border-radius: var(--bb-radius-lg);
+    border: 3px solid var(--bb-border);
+    box-shadow: var(--bb-shadow-soft);
     text-align: center;
     z-index: 20;
+}
+
+.ujcel-box::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: -1;
 }
 
 .ujcel-header {
@@ -31,9 +39,9 @@
     right: 0;
     width: 44px;
     height: 44px;
-    border: none;
+    border: 2px solid var(--bb-border);
     border-radius: 999px;
-    background-color: #0084ff;
+    background-color: var(--bb-card-light);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -47,9 +55,11 @@
 
 .ujcel-title {
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 800;
     margin-bottom: 12px;
-    color: #1e1e1e;
+    color: var(--bb-text);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
 }
 
 .ujcel-form {
@@ -61,10 +71,10 @@
 .ujcel-input {
     width: 100%;
     padding: 10px 12px;
-    background-color: #1f82db;
-    border: none;
+    background-color: var(--bb-card-light);
+    border: 2px solid var(--bb-border);
     border-radius: 8px;
-    color: #ffffff;
+    color: var(--bb-white);
     font-size: 12px;
 }
 
@@ -75,22 +85,18 @@
 .ujcel-submit {
     width: 100%;
     padding: 10px;
-    background-color: #0084ff;
-    color: #ffffff;
-    border: none;
+    background-color: var(--bb-accent);
+    color: var(--bb-text);
+    border: 2px solid var(--bb-border);
     border-radius: 8px;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 800;
     cursor: pointer;
     margin-top: 2px;
 }
 
 @media (max-width: 600px) {
-    .ujcel-box {
-        width: 320px;
-    }
-
     .ujcel-logo {
-        height: 40px;
+        height: 42px;
     }
 }

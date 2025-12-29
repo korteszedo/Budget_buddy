@@ -5,9 +5,11 @@
 }
 
 .overview-title {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
 }
 
 .expenses-grid {
@@ -22,8 +24,8 @@
     gap: 8px;
     font-size: 12px;
     font-weight: 700;
-    padding-bottom: 5px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.75);
+    padding-bottom: 6px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.35);
 }
 
 .expenses-name {

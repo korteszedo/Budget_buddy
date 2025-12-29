@@ -1,4 +1,57 @@
-.logo{
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --bb-bg: #d2bfa6;
+  --bb-bg-alt: #d8c6ad;
+  --bb-surface: #ead7bf;
+  --bb-card: #2a78b6;
+  --bb-card-dark: #226ea4;
+  --bb-card-light: #1f82db;
+  --bb-accent: #d2a059;
+  --bb-accent-strong: #c48a42;
+  --bb-border: #2d2d2d;
+  --bb-shadow: 0 6px 0 rgba(0, 0, 0, 0.35);
+  --bb-shadow-soft: 0 10px 24px rgba(0, 0, 0, 0.25);
+  --bb-radius-lg: 18px;
+  --bb-radius-md: 12px;
+  --bb-radius-sm: 8px;
+  --bb-text: #1e1e1e;
+  --bb-text-muted: #4a3d34;
+  --bb-white: #ffffff;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Rubik", "Segoe UI", sans-serif;
+  background-color: var(--bb-bg);
+  color: var(--bb-text);
+  min-height: 100vh;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+.logo {
   width: 100px;
   height: 100px;
 }

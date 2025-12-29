@@ -1,20 +1,22 @@
 /* NAV BAR ALAP */
-ul {
-    list-style: none;
-    margin: 0;
-    padding: 0 40px;
-    height: 110px;
+.nav {
+    background-color: var(--bb-bg-alt);
+    border-bottom: 3px solid var(--bb-border);
+}
 
+.nav-list {
+    list-style: none;
+    margin: 0 auto;
+    padding: 14px clamp(16px, 4vw, 48px);
+    max-width: 1280px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    background-color: #d8c6ad;
-    border-bottom: 3px solid #000;
+    gap: clamp(10px, 2vw, 24px);
+    flex-wrap: wrap;
 }
 
-/* LISTA ELEMEK */
-li {
+.nav-item {
     display: flex;
     align-items: center;
 }
@@ -22,33 +24,57 @@ li {
 /* ALAP LINK */
 .nav-link {
     text-decoration: none;
-    color: black;
-    font-size: 26px;
-    font-weight: 600;
-    margin: 0 25px;
-    padding: 12px 20px;
+    color: var(--bb-text);
+    font-size: clamp(16px, 2.2vw, 26px);
+    font-weight: 700;
+    padding: 10px 18px;
     border-radius: 12px;
+    border: 2px solid transparent;
+    transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
+.nav-link:hover {
+    transform: translateY(-1px);
+}
 
-
-/* AKTÍV (KATTINTOTT / AKTUÁLIS OLDAL) */
-.active {
-    background-color: rgba(52, 118, 164, 0.5);;
+/* AKTIV (KATTINTOTT / AKTUALIS OLDAL) */
+.nav-link.active {
+    background-color: rgba(31, 130, 219, 0.25);
+    border-color: var(--bb-border);
 }
 
 /* LOGO */
-li img {
-    height: 85px;
+.nav-logo img {
+    height: clamp(60px, 8vw, 92px);
     cursor: pointer;
 }
 
 /* HOME ICON */
-li a img {
-    height: 65px;
+.nav-icon img {
+    height: clamp(44px, 6vw, 70px);
 }
 
 /* EXIT ICON KISEBB */
 .exit {
-    height: 40px;
+    height: clamp(30px, 4vw, 44px);
+}
+
+@media (max-width: 720px) {
+    .nav-list {
+        justify-content: center;
+    }
+
+    .nav-text {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 520px) {
+    .nav-list {
+        padding: 12px 16px;
+    }
+
+    .nav-link {
+        padding: 8px 12px;
+    }
 }
