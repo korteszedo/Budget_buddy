@@ -12,8 +12,8 @@ export default function NewTransactionModal({ onClose }) {
     const dateRef = useRef()
 
     function handleSubmit() {
-        const userId = localStorage.getItem("userId")
-        if (!userId) {
+        const token = localStorage.getItem("token")
+        if (!token) {
             return
         }
 
@@ -22,7 +22,7 @@ export default function NewTransactionModal({ onClose }) {
         const category = categoryRef.current.value.trim()
         const dateValue = dateRef.current.value
 
-        addTransaction(userId, type, amount, category, dateValue).then(() => {
+        addTransaction(token, type, amount, category, dateValue).then(() => {
             if (onClose) {
                 onClose()
             }

@@ -11,12 +11,12 @@ export default function Tervek() {
     const [showGoalModal, setShowGoalModal] = useState(false)
 
     function loadGoals() {
-        const userId = localStorage.getItem("userId")
-        if (!userId) {
+        const token = localStorage.getItem("token")
+        if (!token) {
             return
         }
 
-        getGoals(userId).then((data) => {
+        getGoals(token).then((data) => {
             setGoals(Array.isArray(data) ? data : [])
         })
     }
