@@ -1,21 +1,35 @@
-import { Request, Response } from "express";
+﻿import { Request, Response } from "express";
+import jwt from "jsonwebtoken";
+import config from "../config/config";
 import { loginUser, registerUser } from "../users/userServices";
 
 export async function loginController(req: Request, res: Response) {
- const { email, password } = req.body;
+    const { email, password } = req.body;
 
     try {
         const userId = await loginUser(email, password);
 
         if (userId === 0) {
             return res.status(401).json({
-                message: "Hibás email vagy jelszó"
+                message: "Hibas email vagy jelszo"
             });
         }
 
+        const secret = config.jwtSecret;
+        if (!secret) {
+            return res.status(500).json({ message: "JWT secret nincs beallitva" });
+        }
+
+        const token = jwt.sign(
+            { userId },
+            secret,
+            { expiresIn: config.jwtExpiresIn }
+        );
+
         return res.json({
-            message: "Sikeres bejelentkezés",
-            userId
+            message: "Sikeres bejelentkezes",
+            userId,
+            token
         });
 
     } catch (err) {
