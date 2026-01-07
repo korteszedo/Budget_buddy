@@ -1,5 +1,16 @@
+const API_BASE = "http://localhost:3000";
+
+function buildAuthHeaders(token) {
+  if (!token) {
+    return {};
+  }
+  return {
+    Authorization: `Bearer ${token}`,
+  };
+}
+
 export function login(email, password) {
-  return fetch("http://localhost:3000/auth/login", {
+  return fetch(`${API_BASE}/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -17,7 +28,7 @@ export function login(email, password) {
 }
 
 export function register(name, email, password) {
-  return fetch("http://localhost:3000/auth/register", {
+  return fetch(`${API_BASE}/auth/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -35,8 +46,10 @@ export function register(name, email, password) {
     });
 }
 
-export function getBalance(userId) {
-  return fetch(`http://localhost:3000/transactions/balance/${userId}`)
+export function getBalance(token) {
+  return fetch(`${API_BASE}/transactions/balance`, {
+    headers: buildAuthHeaders(token),
+  })
     .then((res) => res.json())
     .then((data) => data)
     .catch((err) => {
@@ -44,8 +57,10 @@ export function getBalance(userId) {
     });
 }
 
-export function getSums(userId) {
-  return fetch(`http://localhost:3000/transactions/sums/${userId}`)
+export function getSums(token) {
+  return fetch(`${API_BASE}/transactions/sums`, {
+    headers: buildAuthHeaders(token),
+  })
     .then((res) => res.json())
     .then((data) => data)
     .catch((err) => {
@@ -54,8 +69,10 @@ export function getSums(userId) {
 }
 
 
-export function getTransactionList(userId) {
-  return fetch(`http://localhost:3000/transactions/list/${userId}`)
+export function getTransactionList(token) {
+  return fetch(`${API_BASE}/transactions/list`, {
+    headers: buildAuthHeaders(token),
+  })
     .then((res) => res.json())
     .then((data) => data)
     .catch((err) => {
@@ -63,15 +80,14 @@ export function getTransactionList(userId) {
     });
 }
 
-export function addTransaction(userId, tipus, osszeg, kategoria, datum) {
-  return fetch("http://localhost:3000/transactions", {
+export function addTransaction(token, tipus, osszeg, kategoria, datum) {
+  return fetch(`${API_BASE}/transactions`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...buildAuthHeaders(token),
     },
     body: JSON.stringify({
-      userId: userId,
-      felhasznalo_id: userId,
       tipus: tipus,
       osszeg: osszeg,
       kategoria: kategoria,
@@ -85,10 +101,10 @@ export function addTransaction(userId, tipus, osszeg, kategoria, datum) {
     });
 }
 
-export function getExpensesByCategory(userId) {
-  return fetch(
-    `http://localhost:3000/transactions/expenses-by-category/${userId}`
-  )
+export function getExpensesByCategory(token) {
+  return fetch(`${API_BASE}/transactions/expenses-by-category`, {
+    headers: buildAuthHeaders(token),
+  })
     .then((res) => res.json())
     .then((data) => data)
     .catch((err) => {
@@ -96,15 +112,14 @@ export function getExpensesByCategory(userId) {
     });
 }
 
-export function addGoal(userId, name, target, current, deadline) {
-  return fetch("http://localhost:3000/goals", {
+export function addGoal(token, name, target, current, deadline) {
+  return fetch(`${API_BASE}/goals`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...buildAuthHeaders(token),
     },
     body: JSON.stringify({
-      userId: userId,
-      felhasznalo_id: userId,
       nev: name,
       name: name,
       cel: target,
@@ -122,8 +137,10 @@ export function addGoal(userId, name, target, current, deadline) {
     });
 }
 
-export function getGoals(userId) {
-  return fetch(`http://localhost:3000/goals/${userId}`)
+export function getGoals(token) {
+  return fetch(`${API_BASE}/goals`, {
+    headers: buildAuthHeaders(token),
+  })
     .then((res) => res.json())
     .then((data) => data)
     .catch((err) => {
@@ -131,11 +148,12 @@ export function getGoals(userId) {
     });
 }
 
-export function updateUser(userId, name, email, password) {
-  return fetch(`http://localhost:3000/users/${userId}`, {
+export function updateUser(token, name, email, password) {
+  return fetch(`${API_BASE}/users`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      ...buildAuthHeaders(token),
     },
     body: JSON.stringify({
       name: name,
@@ -150,9 +168,10 @@ export function updateUser(userId, name, email, password) {
     });
 }
 
-export function deleteUser(userId) {
-  return fetch(`http://localhost:3000/users/${userId}`, {
+export function deleteUser(token) {
+  return fetch(`${API_BASE}/users`, {
     method: "DELETE",
+    headers: buildAuthHeaders(token),
   })
     .then((res) => res.json())
     .then((data) => data)

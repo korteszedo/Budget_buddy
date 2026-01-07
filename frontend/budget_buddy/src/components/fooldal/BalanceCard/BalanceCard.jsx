@@ -11,12 +11,12 @@ export default function BalanceCard() {
     const [balance, setBalance] = useState(0)
 
     useEffect(() => {
-        const userId = localStorage.getItem("userId")
-        if (!userId) {
+        const token = localStorage.getItem("token")
+        if (!token) {
             return
         }
 
-        getBalance(userId).then((data) => {
+        getBalance(token).then((data) => {
             setBalance((data && data.egyenleg) || 0)
         })
     }, [])

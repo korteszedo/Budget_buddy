@@ -12,12 +12,12 @@ export default function TransactionsCard() {
     const [transactions, setTransactions] = useState([])
 
     useEffect(() => {
-        const userId = localStorage.getItem("userId")
-        if (!userId) {
+        const token = localStorage.getItem("token")
+        if (!token) {
             return
         }
 
-        getTransactionList(userId).then((data) => {
+        getTransactionList(token).then((data) => {
             if (Array.isArray(data)) {
                 setTransactions(data.slice(0, 3))
             } else {

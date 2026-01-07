@@ -169,12 +169,12 @@ export default function Grafikonok() {
     const pieChartRef = useRef(null)
 
     useEffect(() => {
-        const userId = localStorage.getItem("userId")
-        if (!userId) {
+        const token = localStorage.getItem("token")
+        if (!token) {
             return
         }
 
-        getTransactionList(userId).then((data) => {
+        getTransactionList(token).then((data) => {
             setTransactions(Array.isArray(data) ? data : [])
         })
     }, [])

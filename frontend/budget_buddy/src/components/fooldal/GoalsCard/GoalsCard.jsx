@@ -11,12 +11,12 @@ export default function GoalsCard() {
     const [goals, setGoals] = useState([])
 
     useEffect(() => {
-        const userId = localStorage.getItem("userId")
-        if (!userId) {
+        const token = localStorage.getItem("token")
+        if (!token) {
             return
         }
 
-        getGoals(userId).then((data) => {
+        getGoals(token).then((data) => {
             if (Array.isArray(data)) {
                 setGoals(data.slice(0, 2))
             } else {

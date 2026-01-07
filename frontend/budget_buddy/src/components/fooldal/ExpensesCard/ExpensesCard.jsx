@@ -11,12 +11,12 @@ export default function ExpensesCard() {
     const [expenses, setExpenses] = useState([])
 
     useEffect(() => {
-        const userId = localStorage.getItem("userId")
-        if (!userId) {
+        const token = localStorage.getItem("token")
+        if (!token) {
             return
         }
 
-        getExpensesByCategory(userId).then((data) => {
+        getExpensesByCategory(token).then((data) => {
             if (Array.isArray(data)) {
                 setExpenses(data.slice(0, 4))
             } else {

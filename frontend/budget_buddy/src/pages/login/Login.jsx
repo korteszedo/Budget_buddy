@@ -22,8 +22,8 @@ export function Login({ nyit_zar, onSuccess }) {
     const jelszo = passInput.current.value;
 
     login(email, jelszo).then((data) => {
-      if (data && data.userId) {
-        localStorage.setItem("userId", data.userId);
+      if (data && data.token) {
+        localStorage.setItem("token", data.token);
         navigate("/fooldal")
       }
     });

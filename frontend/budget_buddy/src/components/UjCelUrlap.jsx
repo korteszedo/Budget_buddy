@@ -11,8 +11,8 @@ export function UjCelUrlap({ nyit_zar, onSuccess }) {
     const dateInput = useRef()
 
     function handleClick() {
-        const userId = localStorage.getItem("userId")
-        if (!userId) {
+        const token = localStorage.getItem("token")
+        if (!token) {
             return
         }
 
@@ -21,7 +21,7 @@ export function UjCelUrlap({ nyit_zar, onSuccess }) {
         const target = Number.isFinite(targetValue) ? targetValue : 0
         const deadline = dateInput.current.value
 
-        addGoal(userId, name, target, 0, deadline).then(() => {
+        addGoal(token, name, target, 0, deadline).then(() => {
             if (onSuccess) {
                 onSuccess()
             }
