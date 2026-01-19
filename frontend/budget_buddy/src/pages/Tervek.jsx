@@ -1,5 +1,6 @@
 import "./tervek.css"
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import Navigacio from "../components/navigacio/Navigacio"
 import CelKartya from "../components/CelKartya"
 import KamatSzamlaloPanel from "../components/KamatSzamlaloPanel"
@@ -9,6 +10,7 @@ import { getGoals } from "../fetch"
 export default function Tervek() {
     const [goals, setGoals] = useState([])
     const [showGoalModal, setShowGoalModal] = useState(false)
+    const navigate = useNavigate()
 
     function loadGoals() {
         const token = localStorage.getItem("token")
@@ -22,8 +24,14 @@ export default function Tervek() {
     }
 
     useEffect(() => {
+        const token = localStorage.getItem("token")
+        if (!token) {
+            navigate("/", { replace: true })
+            return
+        }
+
         loadGoals()
-    }, [])
+    }, [navigate])
 
     const items = goals.slice(0, 4)
 

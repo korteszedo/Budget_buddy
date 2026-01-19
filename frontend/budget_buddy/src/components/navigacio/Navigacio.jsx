@@ -3,9 +3,17 @@ import "./navigacio.css"
 import logo from "../../img/logo.png"
 import home from "../../img/home.png"
 import exit from "../../img/exit.png"
-import { NavLink, Link } from "react-router-dom"
+import { NavLink, Link, useNavigate } from "react-router-dom"
 
 export default function Navigacio() {
+    const navigate = useNavigate()
+
+    function handleLogout() {
+        localStorage.removeItem("token")
+        localStorage.removeItem("userName")
+        navigate("/", { replace: true })
+    }
+
     return (
         <nav className="nav">
             <ul className="nav-list">
@@ -42,9 +50,13 @@ export default function Navigacio() {
                 </li>
 
                 <li className="nav-item nav-icon">
-                    <NavLink to="/">
+                    <button
+                        className="nav-logout"
+                        type="button"
+                        onClick={handleLogout}
+                    >
                         <img src={exit} alt="exit_logo" className="exit" />
-                    </NavLink>
+                    </button>
                 </li>
             </ul>
         </nav>

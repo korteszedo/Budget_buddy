@@ -148,6 +148,36 @@ export function getGoals(token) {
     });
 }
 
+export function getUsers(token) {
+  return fetch(`${API_BASE}/users`, {
+    headers: buildAuthHeaders(token),
+  })
+    .then((res) => res.json())
+    .then((data) => data)
+    .catch((err) => {
+      console.log("Hiba:", err);
+    });
+}
+
+export function editUser(token, userId, name, email) {
+  return fetch(`${API_BASE}/users/${userId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      ...buildAuthHeaders(token),
+    },
+    body: JSON.stringify({
+      name: name,
+      email: email,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => data)
+    .catch((err) => {
+      console.log("Hiba:", err);
+    });
+}
+
 export function updateUser(token, name, email, password) {
   return fetch(`${API_BASE}/users`, {
     method: "PUT",
@@ -168,8 +198,10 @@ export function updateUser(token, name, email, password) {
     });
 }
 
-export function deleteUser(token) {
-  return fetch(`${API_BASE}/users`, {
+export function deleteUser(token, userId) {
+  const hasId = typeof userId === "number" || typeof userId === "string";
+  const url = hasId ? `${API_BASE}/users/${userId}` : `${API_BASE}/users`;
+  return fetch(url, {
     method: "DELETE",
     headers: buildAuthHeaders(token),
   })
