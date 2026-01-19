@@ -54,6 +54,15 @@
     height: clamp(44px, 6vw, 70px);
 }
 
+.nav-logout {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
 /* EXIT ICON KISEBB */
 .exit {
     height: clamp(30px, 4vw, 44px);

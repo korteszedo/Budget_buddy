@@ -1,4 +1,5 @@
 import "./CelKartya.css"
+import kuka from "../img/kuka_icon.png"
 
 function formatFt(value) {
     const number = Number(value) || 0
@@ -27,6 +28,7 @@ export default function CelKartya({ name, current, target }) {
                     Hozzaadas
                 </button>
                 <button className="cel-kartya-btn cel-kartya-btn-danger" type="button">
+                    <img src={kuka} />
                     Torles
                 </button>
             </div>

@@ -1,6 +1,7 @@
 import "./grafikonok.css"
 import Navigacio from "../components/navigacio/Navigacio"
 import { useEffect, useMemo, useRef, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import Chart from "chart.js/auto"
 import { getTransactionList } from "../fetch"
 
@@ -160,6 +161,7 @@ function buildSeries(transactions, rangeId) {
 export default function Grafikonok() {
     const [transactions, setTransactions] = useState([])
     const [range, setRange] = useState("napi")
+    const navigate = useNavigate()
 
     const barCanvasRef = useRef(null)
     const lineCanvasRef = useRef(null)
@@ -171,13 +173,14 @@ export default function Grafikonok() {
     useEffect(() => {
         const token = localStorage.getItem("token")
         if (!token) {
+            navigate("/", { replace: true })
             return
         }
 
         getTransactionList(token).then((data) => {
             setTransactions(Array.isArray(data) ? data : [])
         })
-    }, [])
+    }, [navigate])
 
     const series = useMemo(
         () => buildSeries(transactions, range),
