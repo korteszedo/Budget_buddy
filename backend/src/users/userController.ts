@@ -1,7 +1,46 @@
-import { Request, Response } from "express";
-import { deleteUserForRole2, updateUserForRole2 } from "./userServices";
+import { Response } from "express";
+import { AuthenticatedRequest } from "../middleware/verifyToken";
+import { deleteUserForRole2, getUsersForAdmin, updateUserForRole2 } from "./userServices";
 
-export async function updateUserController(req: Request, res: Response) {
+const ADMIN_ROLE_ID = 1;
+
+function resolveRoleId(req: AuthenticatedRequest) {
+    const roleIdRaw = req.auth?.roleId;
+    const roleId = typeof roleIdRaw === "string" ? Number(roleIdRaw) : roleIdRaw;
+    if (typeof roleId === "number" && Number.isFinite(roleId)) {
+        return roleId;
+    }
+    return null;
+}
+
+function ensureAdmin(req: AuthenticatedRequest, res: Response) {
+    const roleId = resolveRoleId(req);
+    if (roleId !== ADMIN_ROLE_ID) {
+        res.status(403).json({ message: "Nincs jogosultsag" });
+        return false;
+    }
+    return true;
+}
+
+export async function getUsersController(req: AuthenticatedRequest, res: Response) {
+    if (!ensureAdmin(req, res)) {
+        return;
+    }
+
+    try {
+        const users = await getUsersForAdmin();
+        return res.json(users);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Hiba a felhasznalok lekeresekor" });
+    }
+}
+
+export async function updateUserController(req: AuthenticatedRequest, res: Response) {
+    if (!ensureAdmin(req, res)) {
+        return;
+    }
+
     const userId = Number(req.params.userId);
     const name = req.body.name ?? req.body.username ?? req.body.nev;
     const email = req.body.email;
@@ -16,7 +55,11 @@ export async function updateUserController(req: Request, res: Response) {
     }
 }
 
-export async function deleteUserController(req: Request, res: Response) {
+export async function deleteUserController(req: AuthenticatedRequest, res: Response) {
+    if (!ensureAdmin(req, res)) {
+        return;
+    }
+
     const userId = Number(req.params.userId);
 
     try {

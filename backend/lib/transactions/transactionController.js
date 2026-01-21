@@ -40,28 +40,42 @@ exports.getBalanceController = getBalanceController;
 exports.getTransactionListController = getTransactionListController;
 exports.getExpensesByCategoryController = getExpensesByCategoryController;
 var transactionService_1 = require("./transactionService");
+function resolveUserId(req) {
+    var _a;
+    var authIdRaw = (_a = req.auth) === null || _a === void 0 ? void 0 : _a.userId;
+    var authId = typeof authIdRaw === "string" ? Number(authIdRaw) : authIdRaw;
+    if (typeof authId === "number" && Number.isFinite(authId) && authId > 0) {
+        return authId;
+    }
+    var paramId = Number(req.params.userId);
+    if (Number.isFinite(paramId) && paramId > 0) {
+        return paramId;
+    }
+    return null;
+}
 function getBalanceController(req, res) {
     return __awaiter(this, void 0, void 0, function () {
         var userId, balance, err_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    userId = Number(req.params.userId);
+                    userId = resolveUserId(req);
+                    if (!userId) {
+                        return [2 /*return*/, res.status(400).json({ message: "Hianyzik a userId" })];
+                    }
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);
                     return [4 /*yield*/, (0, transactionService_1.getBalanceByUserId)(userId)];
                 case 2:
                     balance = _a.sent();
-                    res.json({
-                        egyenleg: balance
-                    });
-                    return [3 /*break*/, 4];
+                    return [2 /*return*/, res.json({
+                            egyenleg: balance
+                        })];
                 case 3:
                     err_1 = _a.sent();
                     console.error(err_1);
-                    res.status(500).json({ message: "Hiba egyenleg lekérésekor" });
-                    return [3 /*break*/, 4];
+                    return [2 /*return*/, res.status(500).json({ message: "Hiba egyenleg lekérésekor" })];
                 case 4: return [2 /*return*/];
             }
         });
@@ -73,20 +87,21 @@ function getTransactionListController(req, res) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    userId = Number(req.params.userId);
+                    userId = resolveUserId(req);
+                    if (!userId) {
+                        return [2 /*return*/, res.status(400).json({ message: "Hianyzik a userId" })];
+                    }
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);
                     return [4 /*yield*/, (0, transactionService_1.getTransactionList)(userId)];
                 case 2:
                     list = _a.sent();
-                    res.json(list);
-                    return [3 /*break*/, 4];
+                    return [2 /*return*/, res.json(list)];
                 case 3:
                     err_2 = _a.sent();
                     console.error(err_2);
-                    res.status(500).json({ message: "Hiba a tranzakciók lekérésekor" });
-                    return [3 /*break*/, 4];
+                    return [2 /*return*/, res.status(500).json({ message: "Hiba a tranzakciók lekérésekor" })];
                 case 4: return [2 /*return*/];
             }
         });
@@ -98,7 +113,10 @@ function getExpensesByCategoryController(req, res) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    userId = Number(req.params.userId);
+                    userId = resolveUserId(req);
+                    if (!userId) {
+                        return [2 /*return*/, res.status(400).json({ message: "Hianyzik a userId" })];
+                    }
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);

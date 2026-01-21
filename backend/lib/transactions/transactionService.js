@@ -54,7 +54,10 @@ var __read = (this && this.__read) || function (o, n) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getBalanceByUserId = getBalanceByUserId;
 exports.getTransactionList = getTransactionList;
+exports.updateTransactionForRole2 = updateTransactionForRole2;
+exports.deleteTransactionForRole2 = deleteTransactionForRole2;
 exports.getExpenseSumsByCategory = getExpenseSumsByCategory;
+exports.getExpensesByCategory = getExpensesByCategory;
 var db_1 = require("../config/db");
 function getBalanceByUserId(userId) {
     return __awaiter(this, void 0, void 0, function () {
@@ -74,10 +77,57 @@ function getTransactionList(userId) {
         var _a, rows;
         return __generator(this, function (_b) {
             switch (_b.label) {
-                case 0: return [4 /*yield*/, db_1.db.query("\n    SELECT\n      osszeg,\n      tipus\n    FROM Tranzakcio\n    WHERE felhasznalo_id = ?\n    ORDER BY datum DESC\n    ", [userId])];
+                case 0: return [4 /*yield*/, db_1.db.query("\n    SELECT\n      osszeg,\n      tipus,\n      datum\n    FROM Tranzakcio\n    WHERE felhasznalo_id = ?\n    ORDER BY datum DESC\n    ", [userId])];
                 case 1:
                     _a = __read.apply(void 0, [_b.sent(), 1]), rows = _a[0];
                     return [2 /*return*/, rows];
+            }
+        });
+    });
+}
+function updateTransactionForRole2(userId, transactionId, osszeg, tipus, datum) {
+    return __awaiter(this, void 0, void 0, function () {
+        var updates, values, _a, result;
+        var _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0:
+                    updates = [];
+                    values = [];
+                    if (typeof osszeg !== "undefined") {
+                        updates.push("t.osszeg = ?");
+                        values.push(osszeg);
+                    }
+                    if (typeof tipus !== "undefined") {
+                        updates.push("t.tipus = ?");
+                        values.push(tipus);
+                    }
+                    if (typeof datum !== "undefined") {
+                        updates.push("t.datum = ?");
+                        values.push(datum);
+                    }
+                    if (updates.length === 0) {
+                        return [2 /*return*/, 0];
+                    }
+                    values.push(transactionId, userId);
+                    return [4 /*yield*/, db_1.db.query("\n    UPDATE Tranzakcio t\n    JOIN Felhasznalo f ON f.felhasznalo_id = t.felhasznalo_id\n    SET ".concat(updates.join(", "), "\n    WHERE t.tranzakcio_id = ?\n      AND f.felhasznalo_id = ?\n      AND f.szerepkor_id = 2\n    "), values)];
+                case 1:
+                    _a = __read.apply(void 0, [_c.sent(), 1]), result = _a[0];
+                    return [2 /*return*/, (_b = result.affectedRows) !== null && _b !== void 0 ? _b : 0];
+            }
+        });
+    });
+}
+function deleteTransactionForRole2(userId, transactionId) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, result;
+        var _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0: return [4 /*yield*/, db_1.db.query("\n    DELETE t\n    FROM Tranzakcio t\n    JOIN Felhasznalo f ON f.felhasznalo_id = t.felhasznalo_id\n    WHERE t.tranzakcio_id = ?\n      AND f.felhasznalo_id = ?\n      AND f.szerepkor_id = 2\n    ", [transactionId, userId])];
+                case 1:
+                    _a = __read.apply(void 0, [_c.sent(), 1]), result = _a[0];
+                    return [2 /*return*/, (_b = result.affectedRows) !== null && _b !== void 0 ? _b : 0];
             }
         });
     });
@@ -92,6 +142,13 @@ function getExpenseSumsByCategory(userId) {
                     _a = __read.apply(void 0, [_b.sent(), 1]), rows = _a[0];
                     return [2 /*return*/, rows];
             }
+        });
+    });
+}
+function getExpensesByCategory(userId) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            return [2 /*return*/, getExpenseSumsByCategory(userId)];
         });
     });
 }

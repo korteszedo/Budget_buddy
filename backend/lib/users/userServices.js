@@ -53,6 +53,11 @@ var __read = (this && this.__read) || function (o, n) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginUser = loginUser;
+exports.registerUser = registerUser;
+exports.getUserById = getUserById;
+exports.getUsersForAdmin = getUsersForAdmin;
+exports.updateUserForRole2 = updateUserForRole2;
+exports.deleteUserForRole2 = deleteUserForRole2;
 var db_1 = require("../config/db");
 function loginUser(email, password) {
     return __awaiter(this, void 0, void 0, function () {
@@ -66,6 +71,94 @@ function loginUser(email, password) {
                         return [2 /*return*/, 0];
                     }
                     return [2 /*return*/, rows[0].id]; //ha az id nagyobb mint 0 akkor jo a bejelentkeezs
+            }
+        });
+    });
+}
+function registerUser(name, email, password) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, result;
+        var _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0: return [4 /*yield*/, db_1.db.query("INSERT INTO Felhasznalo (nev, email, jelszo, szerepkor_id) VALUES (?, ?, ?, ?)", [name, email, password, 2])];
+                case 1:
+                    _a = __read.apply(void 0, [_c.sent(), 1]), result = _a[0];
+                    return [2 /*return*/, (_b = result.insertId) !== null && _b !== void 0 ? _b : 0];
+            }
+        });
+    });
+}
+function getUserById(userId) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, rows;
+        var _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0: return [4 /*yield*/, db_1.db.query("\n        SELECT\n            felhasznalo_id,\n            nev,\n            email,\n            szerepkor_id\n        FROM Felhasznalo\n        WHERE felhasznalo_id = ?\n        LIMIT 1\n        ", [userId])];
+                case 1:
+                    _a = __read.apply(void 0, [_c.sent(), 1]), rows = _a[0];
+                    return [2 /*return*/, (_b = rows[0]) !== null && _b !== void 0 ? _b : null];
+            }
+        });
+    });
+}
+function getUsersForAdmin() {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, rows;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0: return [4 /*yield*/, db_1.db.query("\n        SELECT\n            felhasznalo_id,\n            nev,\n            email,\n            szerepkor_id\n        FROM Felhasznalo\n        WHERE szerepkor_id = 2\n        ORDER BY felhasznalo_id DESC\n        ")];
+                case 1:
+                    _a = __read.apply(void 0, [_b.sent(), 1]), rows = _a[0];
+                    return [2 /*return*/, rows];
+            }
+        });
+    });
+}
+function updateUserForRole2(userId, name, email, password) {
+    return __awaiter(this, void 0, void 0, function () {
+        var updates, values, _a, result;
+        var _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0:
+                    updates = [];
+                    values = [];
+                    if (typeof name !== "undefined") {
+                        updates.push("nev = ?");
+                        values.push(name);
+                    }
+                    if (typeof email !== "undefined") {
+                        updates.push("email = ?");
+                        values.push(email);
+                    }
+                    if (typeof password !== "undefined") {
+                        updates.push("jelszo = pwd_encrypt(?)");
+                        values.push(password);
+                    }
+                    if (updates.length === 0) {
+                        return [2 /*return*/, 0];
+                    }
+                    values.push(userId);
+                    return [4 /*yield*/, db_1.db.query("\n        UPDATE Felhasznalo\n        SET ".concat(updates.join(", "), "\n        WHERE felhasznalo_id = ?\n          AND szerepkor_id = 2\n        "), values)];
+                case 1:
+                    _a = __read.apply(void 0, [_c.sent(), 1]), result = _a[0];
+                    return [2 /*return*/, (_b = result.affectedRows) !== null && _b !== void 0 ? _b : 0];
+            }
+        });
+    });
+}
+function deleteUserForRole2(userId) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, result;
+        var _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0: return [4 /*yield*/, db_1.db.query("\n        DELETE FROM Felhasznalo\n        WHERE felhasznalo_id = ?\n          AND szerepkor_id = 2\n        ", [userId])];
+                case 1:
+                    _a = __read.apply(void 0, [_c.sent(), 1]), result = _a[0];
+                    return [2 /*return*/, (_b = result.affectedRows) !== null && _b !== void 0 ? _b : 0];
             }
         });
     });
