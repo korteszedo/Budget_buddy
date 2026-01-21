@@ -1,31 +1,13 @@
 import { Response } from "express";
 import { AuthenticatedRequest } from "../middleware/verifyToken";
 import {
- 
   getBalanceByUserId,
   getExpenseSumsByCategory,
   getTransactionList,
-  
 } from "./transactionService";
 
-
-function resolveUserId(req: AuthenticatedRequest) {
-  const authIdRaw = req.auth?.userId;
-  const authId = typeof authIdRaw === "string" ? Number(authIdRaw) : authIdRaw;
-  if (typeof authId === "number" && Number.isFinite(authId) && authId > 0) {
-    return authId;
-  }
-
-  const paramId = Number(req.params.userId);
-  if (Number.isFinite(paramId) && paramId > 0) {
-    return paramId;
-  }
-
-  return null;
-}
-
 export async function getBalanceController(req: AuthenticatedRequest, res: Response) {
-  const userId = resolveUserId(req);
+  const userId = Number(req.user?.userId);
   if (!userId) {
     return res.status(400).json({ message: "Hianyzik a userId" });
   }
@@ -44,7 +26,7 @@ export async function getBalanceController(req: AuthenticatedRequest, res: Respo
 
 
 export async function getTransactionListController(req: AuthenticatedRequest, res: Response) {
-  const userId = resolveUserId(req);
+  const userId = Number(req.user?.userId);
   if (!userId) {
     return res.status(400).json({ message: "Hianyzik a userId" });
   }
@@ -62,7 +44,7 @@ export async function getTransactionListController(req: AuthenticatedRequest, re
 
 
 export async function getExpensesByCategoryController(req: AuthenticatedRequest, res: Response) {
-  const userId = resolveUserId(req);
+  const userId = Number(req.user?.userId);
   if (!userId) {
     return res.status(400).json({ message: "Hianyzik a userId" });
   }
