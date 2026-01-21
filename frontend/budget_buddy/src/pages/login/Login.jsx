@@ -24,7 +24,8 @@ export function Login({ nyit_zar, onSuccess }) {
     login(email, jelszo).then((data) => {
       if (data && data.token) {
         localStorage.setItem("token", data.token);
-        const roleId = data.szerepkor_id ?? data.role_id ?? data.roleId;
+        const rawRoleId = data.szerepkor_id ?? data.role_id ?? data.roleId;
+        const roleId = typeof rawRoleId === "string" ? Number(rawRoleId) : rawRoleId;
         navigate(roleId === 2 ? "/admin" : "/fooldal")
       }
     });

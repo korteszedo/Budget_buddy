@@ -59,7 +59,7 @@ function getGoalsByUserId(userId) {
         var _a, rows;
         return __generator(this, function (_b) {
             switch (_b.label) {
-                case 0: return [4 /*yield*/, db_1.db.query("\n    SELECT\n      nev,\n      aktualis_osszeg AS aktualis,\n      osszeg_cel AS cel\n    FROM Cel\n    WHERE felhasznalo_id = ?\n    ", [userId])];
+                case 0: return [4 /*yield*/, db_1.db.query("\n    SELECT\n      *,\n      aktualis_osszeg AS aktualis,\n      osszeg_cel AS cel\n    FROM Cel\n    WHERE felhasznalo_id = ?\n    ", [userId])];
                 case 1:
                     _a = __read.apply(void 0, [_b.sent(), 1]), rows = _a[0];
                     return [2 /*return*/, rows];

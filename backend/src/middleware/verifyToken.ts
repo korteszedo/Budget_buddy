@@ -3,7 +3,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import config from "../config/config";
 
 export interface AuthenticatedRequest extends Request {
-  auth?: JwtPayload & { userId?: number };
+  auth?: JwtPayload & { userId?: number | string; roleId?: number | string };
 }
 
 const verifyToken = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {

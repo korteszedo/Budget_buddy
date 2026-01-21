@@ -23,6 +23,41 @@ export async function registerUser(name: string, email: string, password: string
     return result.insertId ?? 0;
 }
 
+export async function getUserById(userId: number) {
+    const [rows]: any = await db.query(
+        `
+        SELECT
+            felhasznalo_id,
+            nev,
+            email,
+            szerepkor_id
+        FROM Felhasznalo
+        WHERE felhasznalo_id = ?
+        LIMIT 1
+        `,
+        [userId]
+    );
+
+    return rows[0] ?? null;
+}
+
+export async function getUsersForAdmin() {
+    const [rows]: any = await db.query(
+        `
+        SELECT
+            felhasznalo_id,
+            nev,
+            email,
+            szerepkor_id
+        FROM Felhasznalo
+        WHERE szerepkor_id = 2
+        ORDER BY felhasznalo_id DESC
+        `
+    );
+
+    return rows;
+}
+
 export async function updateUserForRole2(
     userId: number,
     name?: string,

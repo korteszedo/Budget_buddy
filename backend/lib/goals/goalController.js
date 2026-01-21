@@ -38,13 +38,29 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getGoalsController = getGoalsController;
 var goalService_1 = require("./goalService");
+function resolveUserId(req) {
+    var _a;
+    var authIdRaw = (_a = req.auth) === null || _a === void 0 ? void 0 : _a.userId;
+    var authId = typeof authIdRaw === "string" ? Number(authIdRaw) : authIdRaw;
+    if (typeof authId === "number" && Number.isFinite(authId) && authId > 0) {
+        return authId;
+    }
+    var paramId = Number(req.params.userId);
+    if (Number.isFinite(paramId) && paramId > 0) {
+        return paramId;
+    }
+    return null;
+}
 function getGoalsController(req, res) {
     return __awaiter(this, void 0, void 0, function () {
         var userId, goals, err_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    userId = Number(req.params.userId);
+                    userId = resolveUserId(req);
+                    if (!userId) {
+                        return [2 /*return*/, res.status(400).json({ message: "Hianyzik a userId" })];
+                    }
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);

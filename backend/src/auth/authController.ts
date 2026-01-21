@@ -1,7 +1,7 @@
 ﻿import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import config from "../config/config";
-import { loginUser, registerUser } from "../users/userServices";
+import { getUserById, loginUser, registerUser } from "../users/userServices";
 
 export async function loginController(req: Request, res: Response) {
     const { email, password } = req.body;
@@ -15,13 +15,20 @@ export async function loginController(req: Request, res: Response) {
             });
         }
 
+        const user = await getUserById(userId);
+        if (!user) {
+            return res.status(500).json({ message: "Felhasznalo nem talalhato" });
+        }
+
+        const roleId = user.szerepkor_id;
+
         const secret = config.jwtSecret;
         if (!secret) {
             return res.status(500).json({ message: "JWT secret nincs beallitva" });
         }
 
         const token = jwt.sign(
-            { userId },
+            { userId, roleId },
             secret,
             { expiresIn: config.jwtExpiresIn }
         );
@@ -29,7 +36,9 @@ export async function loginController(req: Request, res: Response) {
         return res.json({
             message: "Sikeres bejelentkezes",
             userId,
-            token
+            token,
+            szerepkor_id: roleId,
+            roleId
         });
 
     } catch (err) {

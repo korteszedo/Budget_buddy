@@ -1,4 +1,5 @@
-import { Request, Response } from "express";
-export declare function getBalanceController(req: Request, res: Response): Promise<void>;
-export declare function getTransactionListController(req: Request, res: Response): Promise<void>;
-export declare function getExpensesByCategoryController(req: Request, res: Response): Promise<Response<any, Record<string, any>>>;
+import { Response } from "express";
+import { AuthenticatedRequest } from "../middleware/verifyToken";
+export declare function getBalanceController(req: AuthenticatedRequest, res: Response): Promise<Response<any, Record<string, any>>>;
+export declare function getTransactionListController(req: AuthenticatedRequest, res: Response): Promise<Response<any, Record<string, any>>>;
+export declare function getExpensesByCategoryController(req: AuthenticatedRequest, res: Response): Promise<Response<any, Record<string, any>>>;

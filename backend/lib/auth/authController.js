@@ -35,37 +35,84 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginController = loginController;
+exports.registerController = registerController;
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+var config_1 = __importDefault(require("../config/config"));
 var userServices_1 = require("../users/userServices");
 function loginController(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, email, password, userId, err_1;
+        var _a, email, password, userId, user, roleId, secret, token, err_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     _a = req.body, email = _a.email, password = _a.password;
                     _b.label = 1;
                 case 1:
-                    _b.trys.push([1, 3, , 4]);
+                    _b.trys.push([1, 4, , 5]);
                     return [4 /*yield*/, (0, userServices_1.loginUser)(email, password)];
                 case 2:
                     userId = _b.sent();
                     if (userId === 0) {
                         return [2 /*return*/, res.status(401).json({
-                                message: "Hibás email vagy jelszó"
+                                message: "Hibas email vagy jelszo"
                             })];
                     }
-                    return [2 /*return*/, res.json({
-                            message: "Sikeres bejelentkezés",
-                            userId: userId
-                        })];
+                    return [4 /*yield*/, (0, userServices_1.getUserById)(userId)];
                 case 3:
+                    user = _b.sent();
+                    if (!user) {
+                        return [2 /*return*/, res.status(500).json({ message: "Felhasznalo nem talalhato" })];
+                    }
+                    roleId = user.szerepkor_id;
+                    secret = config_1.default.jwtSecret;
+                    if (!secret) {
+                        return [2 /*return*/, res.status(500).json({ message: "JWT secret nincs beallitva" })];
+                    }
+                    token = jsonwebtoken_1.default.sign({ userId: userId, roleId: roleId }, secret, { expiresIn: config_1.default.jwtExpiresIn });
+                    return [2 /*return*/, res.json({
+                            message: "Sikeres bejelentkezes",
+                            userId: userId,
+                            token: token,
+                            szerepkor_id: roleId,
+                            roleId: roleId
+                        })];
+                case 4:
                     err_1 = _b.sent();
                     console.error(err_1);
                     return [2 /*return*/, res.status(500).json({
                             message: "Szerver hiba"
                         })];
+                case 5: return [2 /*return*/];
+            }
+        });
+    });
+}
+function registerController(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var name, email, password, userId, err_2;
+        var _a, _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0:
+                    name = (_a = req.body.name) !== null && _a !== void 0 ? _a : req.body.username;
+                    email = req.body.email;
+                    password = (_b = req.body.password) !== null && _b !== void 0 ? _b : req.body.jelszo;
+                    _c.label = 1;
+                case 1:
+                    _c.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, (0, userServices_1.registerUser)(name, email, password)];
+                case 2:
+                    userId = _c.sent();
+                    return [2 /*return*/, res.json({ userId: userId })];
+                case 3:
+                    err_2 = _c.sent();
+                    console.error(err_2);
+                    return [2 /*return*/, res.json({ userId: 0 })];
                 case 4: return [2 /*return*/];
             }
         });
