@@ -1,6 +1,8 @@
 
 import { db } from "../config/db";
 
+const USER_ROLE_ID = 1;
+
 export async function loginUser(email: string, password: string) {
     const [rows]: any = await db.query(
         "SELECT login(?, ?) AS id",
@@ -17,7 +19,7 @@ export async function loginUser(email: string, password: string) {
 export async function registerUser(name: string, email: string, password: string) {
     const [result]: any = await db.query(
         "INSERT INTO Felhasznalo (nev, email, jelszo, szerepkor_id) VALUES (?, ?, ?, ?)",
-        [name, email, password, 2]
+        [name, email, password, USER_ROLE_ID]
     );
 
     return result.insertId ?? 0;
@@ -50,15 +52,16 @@ export async function getUsersForAdmin() {
             email,
             szerepkor_id
         FROM Felhasznalo
-        WHERE szerepkor_id = 2
+        WHERE szerepkor_id = ?
         ORDER BY felhasznalo_id DESC
-        `
+        `,
+        [USER_ROLE_ID]
     );
 
     return rows;
 }
 
-export async function updateUserForRole2(
+export async function updateUserByAdmin(
     userId: number,
     name?: string,
     email?: string,
@@ -86,14 +89,14 @@ export async function updateUserForRole2(
         return 0;
     }
 
-    values.push(userId);
+    values.push(userId, USER_ROLE_ID);
 
     const [result]: any = await db.query(
         `
         UPDATE Felhasznalo
         SET ${updates.join(", ")}
         WHERE felhasznalo_id = ?
-          AND szerepkor_id = 2
+          AND szerepkor_id = ?
         `,
         values
     );
@@ -101,14 +104,14 @@ export async function updateUserForRole2(
     return result.affectedRows ?? 0;
 }
 
-export async function deleteUserForRole2(userId: number) {
+export async function deleteUserByAdmin(userId: number) {
     const [result]: any = await db.query(
         `
         DELETE FROM Felhasznalo
         WHERE felhasznalo_id = ?
-          AND szerepkor_id = 2
+          AND szerepkor_id = ?
         `,
-        [userId]
+        [userId, USER_ROLE_ID]
     );
 
     return result.affectedRows ?? 0;

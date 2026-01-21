@@ -3,18 +3,24 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import config from "../config/config";
 
 export interface AuthenticatedRequest extends Request {
-  auth?: JwtPayload & { userId?: number | string; roleId?: number | string };
+  user?: JwtPayload & { userId?: number | string; roleId?: number | string };
 }
 
 const verifyToken = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
-  const bodyToken = typeof req.body?.token === "string" ? req.body.token : undefined;
-  const queryToken = typeof req.query?.token === "string" ? req.query.token : undefined;
-  const headerToken =
-    typeof req.headers["x-access-token"] === "string" ? req.headers["x-access-token"] : undefined;
-  const authHeader = req.headers.authorization;
-  const bearerToken = authHeader?.startsWith("Bearer ") ? authHeader.slice(7) : undefined;
+  let token: string | undefined;
+  if (typeof req.body?.token === "string") {
+    token = req.body.token;
+  }
+  if (!token && typeof req.query?.token === "string") {
+    token = req.query.token;
+  }
+  if (!token && typeof req.headers["x-access-token"] === "string") {
+    token = req.headers["x-access-token"];
+  }
+  if (!token && req.headers.authorization?.startsWith("Bearer ")) {
+    token = req.headers.authorization.slice(7);
+  }
 
-  const token = bodyToken || queryToken || headerToken || bearerToken;
   if (!token) {
     return res.status(403).json({ message: "Token szukseges a hozzafereshez" });
   }
@@ -29,7 +35,7 @@ const verifyToken = (req: AuthenticatedRequest, res: Response, next: NextFunctio
     if (typeof decoded === "string") {
       return res.status(401).json({ message: "Ervenytelen token" });
     }
-    req.auth = decoded;
+    req.user = decoded;
     return next();
   } catch {
     return res.status(401).json({ message: "Ervenytelen token" });
