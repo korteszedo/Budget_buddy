@@ -5,7 +5,7 @@ import { addTransaction } from "../../../fetch"
 import logo from "../../../img/logo.png"
 import backArrow from "../../../img/back-arrow.png"
 
-export default function NewTransactionModal({ onClose }) {
+export default function NewTransactionModal({ onClose, onSuccess }) {
     const [type, setType] = useState("kiadas")
     const amountRef = useRef()
     const categoryRef = useRef()
@@ -21,8 +21,19 @@ export default function NewTransactionModal({ onClose }) {
         const amount = Number.isFinite(amountValue) ? amountValue : 0
         const category = categoryRef.current.value.trim()
         const dateValue = dateRef.current.value
+        const date =
+            dateValue && dateValue.trim()
+                ? dateValue
+                : new Date().toISOString().slice(0, 10)
 
-        addTransaction(token, type, amount, category, dateValue).then(() => {
+        if (!category || amount <= 0) {
+            return
+        }
+
+        addTransaction(token, type, amount, category, date).then((data) => {
+            if (onSuccess) {
+                onSuccess(data)
+            }
             if (onClose) {
                 onClose()
             }
@@ -50,7 +61,7 @@ export default function NewTransactionModal({ onClose }) {
                     type="button"
                     onClick={() => setType("kiadas")}
                 >
-                    Kiadas
+                    Kiadás
                 </button>
                 <button
                     className={`transaction-type-btn ${
@@ -59,7 +70,7 @@ export default function NewTransactionModal({ onClose }) {
                     type="button"
                     onClick={() => setType("bevetel")}
                 >
-                    Bevetel
+                    Bevétel
                 </button>
             </div>
 
@@ -68,19 +79,19 @@ export default function NewTransactionModal({ onClose }) {
                     className="transaction-input"
                     type="number"
                     step="1"
-                    placeholder="Osszeg"
+                    placeholder="Összeg"
                     ref={amountRef}
                 />
                 <input
                     className="transaction-input"
                     type="text"
-                    placeholder="Kategoria"
+                    placeholder="Kategória"
                     ref={categoryRef}
                 />
                 <input
                     className="transaction-input"
                     type="date"
-                    placeholder="Datum"
+                    placeholder="Dátum"
                     ref={dateRef}
                 />
                 <button
@@ -88,7 +99,7 @@ export default function NewTransactionModal({ onClose }) {
                     type="button"
                     onClick={handleSubmit}
                 >
-                    Hozzaadas
+                    Hozzáadás
                 </button>
             </div>
         </div>

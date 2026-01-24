@@ -11,25 +11,38 @@ export default function BalanceCard() {
     const [balance, setBalance] = useState(0)
 
     useEffect(() => {
-        const token = localStorage.getItem("token")
-        if (!token) {
-            return
+        function loadBalance() {
+            const token = localStorage.getItem("token")
+            if (!token) {
+                setBalance(0)
+                return
+            }
+
+            getBalance(token).then((data) => {
+                setBalance((data && data.egyenleg) || 0)
+            })
         }
 
-        getBalance(token).then((data) => {
-            setBalance((data && data.egyenleg) || 0)
-        })
+        function handleUpdated() {
+            loadBalance()
+        }
+
+        loadBalance()
+        window.addEventListener("transactions:updated", handleUpdated)
+        return () => {
+            window.removeEventListener("transactions:updated", handleUpdated)
+        }
     }, [])
 
     return (
         <div className="fooldal-card fooldal-card-balance">
             <div className="fooldal-card-title">Egyenleg</div>
             <div className="fooldal-card-subtitle">
-                Az elerheto egyenleged a szamladon
+                Az elérhető egyenleged a számládon
             </div>
             <div className="fooldal-balance-value">{formatFt(balance)}</div>
             <div className="fooldal-balance-note">
-                Kovesd szamon a penzugyeid, hogy elerd celjaid.
+                Kövesd számon a pénzügyeid, hogy elérd céljaid.
             </div>
         </div>
     )

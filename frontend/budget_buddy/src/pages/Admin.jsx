@@ -40,7 +40,7 @@ export default function Admin() {
     }
 
     function getUserEmail(user) {
-        return user.email ?? "N/A"
+        return user.email ?? "Nem elérhető"
     }
 
     function getEditableEmail(user) {
@@ -121,9 +121,9 @@ export default function Admin() {
                 <div className="admin-brand">
                     <img src={logo} alt="Budget Buddy" className="admin-logo" />
                 </div>
-                <div className="admin-title">Adminisztrator</div>
+                <div className="admin-title">Adminisztrátor</div>
                 <button className="admin-exit" type="button" onClick={handleExit}>
-                    Kilepes
+                    Kilépés
                 </button>
             </header>
 
@@ -131,9 +131,9 @@ export default function Admin() {
                 <section className="admin-card admin-card--desktop">
                     <div className="admin-table">
                         <div className="admin-row admin-row--head">
-                            <div>Nev</div>
-                            <div>Email cim</div>
-                            <div>Kezeles</div>
+                            <div>Név</div>
+                            <div>Email cím</div>
+                            <div>Kezelés</div>
                         </div>
                         {users.map((user, index) => {
                             const userId = getUserId(user)
@@ -191,7 +191,7 @@ export default function Admin() {
                                                     }
                                                     disabled={isSaving}
                                                 >
-                                                    Mentes
+                                                    Mentés
                                                 </button>
                                                 <button
                                                     className="admin-link admin-link--muted"
@@ -199,7 +199,7 @@ export default function Admin() {
                                                     onClick={resetEdit}
                                                     disabled={isSaving}
                                                 >
-                                                    Megse
+                                                    Mégse
                                                 </button>
                                             </>
                                         ) : (
@@ -215,9 +215,9 @@ export default function Admin() {
                                                     <img
                                                         className="admin-icon"
                                                         src={kuka}
-                                                        alt="Torles"
+                                                        alt="Törlés"
                                                     />
-                                                    Torles
+                                                    Törlés
                                                 </button>
                                                 <button
                                                     className="admin-link"
@@ -230,9 +230,9 @@ export default function Admin() {
                                                     <img
                                                         className="admin-icon"
                                                         src={edit}
-                                                        alt="Szerkesztes"
+                                                        alt="Szerkesztés"
                                                     />
-                                                    Szerkesztes
+                                                    Szerkesztés
                                                 </button>
                                             </>
                                         )}
@@ -306,7 +306,7 @@ export default function Admin() {
                                                     }
                                                     disabled={isSaving}
                                                 >
-                                                    Mentes
+                                                    Mentés
                                                 </button>
                                                 <button
                                                     className="admin-link admin-link--muted"
@@ -314,7 +314,7 @@ export default function Admin() {
                                                     onClick={resetEdit}
                                                     disabled={isSaving}
                                                 >
-                                                    Megse
+                                                    Mégse
                                                 </button>
                                             </>
                                         ) : (
@@ -327,7 +327,7 @@ export default function Admin() {
                                                     }
                                                     disabled={!userId}
                                                 >
-                                                    <img src={kuka} alt="Torles" />
+                                                    <img src={kuka} alt="Törlés" />
                                                 </button>
                                                 <button
                                                     className="admin-icon-btn"
@@ -339,7 +339,7 @@ export default function Admin() {
                                                 >
                                                     <img
                                                         src={edit}
-                                                        alt="Szerkesztes"
+                                                        alt="Szerkesztés"
                                                     />
                                                 </button>
                                             </>

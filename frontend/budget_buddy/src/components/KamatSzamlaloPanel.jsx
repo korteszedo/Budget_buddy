@@ -29,23 +29,23 @@ export default function KamatSzamlaloPanel() {
                     className="kamat-input"
                     type="number"
                     step="1"
-                    placeholder="Befektetett osszeg"
+                    placeholder="Befektetett összeg"
                     ref={amountRef}
                 />
                 <input
                     className="kamat-input"
                     type="number"
                     step="0.01"
-                    placeholder="Kamatlab (%)"
+                    placeholder="Kamatláb (%)"
                     ref={rateRef}
                 />
-                <div className="kamat-result">Vegosszeg: {formatFt(result)}</div>
+                <div className="kamat-result">Végösszeg: {formatFt(result)}</div>
                 <button
                     className="kamat-button"
                     type="button"
                     onClick={handleCalculate}
                 >
-                    Szamolas
+                    Számolás
                 </button>
             </div>
         </div>
