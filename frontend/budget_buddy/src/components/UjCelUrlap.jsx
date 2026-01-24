@@ -48,31 +48,31 @@ export function UjCelUrlap({ nyit_zar, onSuccess }) {
                 </button>
             </div>
 
-            <div className="ujcel-title">Uj cel</div>
+            <div className="ujcel-title">Új cél</div>
 
             <div className="ujcel-form">
                 <input
                     className="ujcel-input"
                     type="text"
-                    placeholder="Cel neve"
+                    placeholder="Cél neve"
                     ref={nameInput}
                 />
                 <input
                     className="ujcel-input"
                     type="number"
                     step="1"
-                    placeholder="Cel osszeg"
+                    placeholder="Célösszeg"
                     ref={targetInput}
                 />
                 <input
                     className="ujcel-input"
                     type="date"
-                    placeholder="Hatarido"
+                    placeholder="Határidő"
                     ref={dateInput}
                 />
 
                 <button className="ujcel-submit" type="button" onClick={handleClick}>
-                    Hozzaadas
+                    Hozzáadás
                 </button>
             </div>
         </div>

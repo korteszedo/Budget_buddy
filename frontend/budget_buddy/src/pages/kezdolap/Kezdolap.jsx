@@ -27,7 +27,7 @@ export function Kezdolap() {
       <div className="fooldal_fejlec_div">
 
         <div className="fejlec_logo">
-          <img src={logo} alt="logo" id="fooladl_logo" />
+          <img src={logo} alt="Logó" id="fooladl_logo" />
         </div>
 
         <div className="fejlec_gombok">
@@ -56,7 +56,7 @@ export function Kezdolap() {
       <div className="content">
 
         <div id="tartalom_felso">
-          <h1>Budget Buddy, aszisztens a spóroláshoz</h1>
+          <h1>Budget Buddy, asszisztens a spóroláshoz</h1>
 
           <img src={images[currentIndex]} alt="" className="hero_kep" />
 
@@ -71,7 +71,7 @@ export function Kezdolap() {
             <h3>Kiadások követése</h3>
             <p>
               Kövesd bevételeidet és kiadásaidat
-              könnyen átlátható táblázatban és grafikonokon. 
+              könnyen átlátható táblázatban és grafikonokon.
               Lásd, mire megy el a pénzed!
             </p>
           </div>
@@ -79,7 +79,7 @@ export function Kezdolap() {
           <div id='middle-box'>
             <h3>Befektetés és kamatszámítás</h3>
             <p>
-              Használd a beépített kalkulátort, 
+              Használd a beépített kalkulátort,
               hogy kiszámold a hitelek vagy befektetések hozamát és kamatait.
             </p>
           </div>
@@ -87,7 +87,8 @@ export function Kezdolap() {
           <div className="box">
             <h3>Pénzügyi tervezés</h3>
             <p>
-              Tűzz ki célokat, mint például egy nyaralás vagy új autó – és számold ki, mennyit kell havonta félretenned.
+              Tűzz ki célokat, mint például egy nyaralás vagy új autó,
+              és számold ki, mennyit kell havonta félretenned.
             </p>
           </div>
         </div>

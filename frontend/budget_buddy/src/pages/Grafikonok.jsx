@@ -9,7 +9,7 @@ const RANGE_OPTIONS = [
     { id: "napi", label: "Napi", unit: "day", count: 7 },
     { id: "heti", label: "Heti", unit: "week", count: 8 },
     { id: "havi", label: "Havi", unit: "month", count: 12 },
-    { id: "eves", label: "Eves", unit: "year", count: 5 },
+    { id: "eves", label: "Éves", unit: "year", count: 5 },
 ]
 
 function startOfDay(date) {
@@ -211,13 +211,13 @@ export default function Grafikonok() {
                 labels: series.labels,
                 datasets: [
                     {
-                        label: "Bevetel",
+                        label: "Bevétel",
                         data: series.income,
                         backgroundColor: "#4caf50",
                         borderRadius: 4,
                     },
                     {
-                        label: "Kiadas",
+                        label: "Kiadás",
                         data: series.expense,
                         backgroundColor: "#d65555",
                         borderRadius: 4,
@@ -274,7 +274,7 @@ export default function Grafikonok() {
                 labels: series.labels,
                 datasets: [
                     {
-                        label: "Koltseg",
+                        label: "Költség",
                         data: series.expense,
                         borderColor: "#1f4f9c",
                         backgroundColor: "rgba(31, 79, 156, 0.2)",
@@ -331,7 +331,7 @@ export default function Grafikonok() {
         pieChartRef.current = new Chart(pieCanvasRef.current, {
             type: "pie",
             data: {
-                labels: ["Kiadas", "Bevetel"],
+                labels: ["Kiadás", "Bevétel"],
                 datasets: [
                     {
                         data: [totals.totalExpense, totals.totalIncome],
@@ -376,7 +376,7 @@ export default function Grafikonok() {
                     <div className="grafikonok-card grafikonok-card-wide">
                         <div className="grafikonok-card-header">
                             <div className="grafikonok-card-title">
-                                Kolteseid idoszak szerint
+                                Költéseid időszak szerint
                             </div>
                             <div className="grafikonok-range">
                                 {RANGE_OPTIONS.map((option) => (
@@ -405,7 +405,7 @@ export default function Grafikonok() {
                 <section className="grafikonok-grid">
                     <div className="grafikonok-card">
                         <div className="grafikonok-card-title">
-                            Koltseg alakulasa
+                            Költség alakulása
                         </div>
                         <div className="grafikonok-chart grafikonok-chart-small">
                             <canvas ref={lineCanvasRef} />
@@ -414,7 +414,7 @@ export default function Grafikonok() {
 
                     <div className="grafikonok-card grafikonok-card-pie">
                         <div className="grafikonok-card-title">
-                            Kiadas es bevetel
+                            Kiadás és bevétel
                         </div>
                         <div className="grafikonok-chart grafikonok-chart-pie">
                             <canvas ref={pieCanvasRef} />
@@ -423,7 +423,7 @@ export default function Grafikonok() {
                 </section>
 
                 <div className="grafikonok-footer">
-                    Erd el az anyagi fuggetlenseget
+                    Érd el az anyagi függetlenséget
                 </div>
             </main>
         </div>

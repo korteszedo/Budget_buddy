@@ -18,7 +18,7 @@ export default function Navigacio() {
         <nav className="nav">
             <ul className="nav-list">
                 <li className="nav-item nav-logo">
-                    <img src={logo} alt="logo" />
+                    <img src={logo} alt="Logó" />
                 </li>
 
                 <li className="nav-item nav-text">
@@ -34,7 +34,7 @@ export default function Navigacio() {
 
                 <li className="nav-item nav-icon">
                     <Link to="/fooldal">
-                        <img src={home} alt="Home_icon" />
+                        <img src={home} alt="Főoldal" />
                     </Link>
                 </li>
 
@@ -55,7 +55,7 @@ export default function Navigacio() {
                         type="button"
                         onClick={handleLogout}
                     >
-                        <img src={exit} alt="exit_logo" className="exit" />
+                        <img src={exit} alt="Kilépés" className="exit" />
                     </button>
                 </li>
             </ul>

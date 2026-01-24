@@ -27,7 +27,7 @@ export default function GoalsCard() {
 
     return (
         <div className="fooldal-overview-card goals-card">
-            <div className="overview-title">Celok</div>
+            <div className="overview-title">Célok</div>
             <div className="goals-list">
                 {goals.length === 0 ? (
                     <div className="fooldal-empty">Nincs adat</div>

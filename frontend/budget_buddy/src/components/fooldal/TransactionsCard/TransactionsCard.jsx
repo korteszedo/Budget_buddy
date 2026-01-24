@@ -12,23 +12,36 @@ export default function TransactionsCard() {
     const [transactions, setTransactions] = useState([])
 
     useEffect(() => {
-        const token = localStorage.getItem("token")
-        if (!token) {
-            return
+        function loadTransactions() {
+            const token = localStorage.getItem("token")
+            if (!token) {
+                setTransactions([])
+                return
+            }
+
+            getTransactionList(token).then((data) => {
+                if (Array.isArray(data)) {
+                    setTransactions(data.slice(0, 3))
+                } else {
+                    setTransactions([])
+                }
+            })
         }
 
-        getTransactionList(token).then((data) => {
-            if (Array.isArray(data)) {
-                setTransactions(data.slice(0, 3))
-            } else {
-                setTransactions([])
-            }
-        })
+        function handleUpdated() {
+            loadTransactions()
+        }
+
+        loadTransactions()
+        window.addEventListener("transactions:updated", handleUpdated)
+        return () => {
+            window.removeEventListener("transactions:updated", handleUpdated)
+        }
     }, [])
 
     return (
         <div className="fooldal-card fooldal-card-transactions">
-            <div className="fooldal-card-title">Tranzakciok</div>
+            <div className="fooldal-card-title">Tranzakciók</div>
             <div className="fooldal-transactions">
                 {transactions.length === 0 ? (
                     <div className="fooldal-empty">Nincs adat</div>
@@ -42,7 +55,7 @@ export default function TransactionsCard() {
                                 key={`${item.tipus}-${item.osszeg}-${index}`}
                             >
                                 <span className="fooldal-transaction-label">
-                                    {isIncome ? "Bevetel" : "Kiadas"}
+                                    {isIncome ? "Bevétel" : "Kiadás"}
                                 </span>
                                 <span
                                     className={`fooldal-transaction-amount ${

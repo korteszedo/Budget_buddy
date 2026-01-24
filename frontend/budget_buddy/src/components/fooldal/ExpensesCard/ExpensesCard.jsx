@@ -11,23 +11,36 @@ export default function ExpensesCard() {
     const [expenses, setExpenses] = useState([])
 
     useEffect(() => {
-        const token = localStorage.getItem("token")
-        if (!token) {
-            return
+        function loadExpenses() {
+            const token = localStorage.getItem("token")
+            if (!token) {
+                setExpenses([])
+                return
+            }
+
+            getExpensesByCategory(token).then((data) => {
+                if (Array.isArray(data)) {
+                    setExpenses(data.slice(0, 4))
+                } else {
+                    setExpenses([])
+                }
+            })
         }
 
-        getExpensesByCategory(token).then((data) => {
-            if (Array.isArray(data)) {
-                setExpenses(data.slice(0, 4))
-            } else {
-                setExpenses([])
-            }
-        })
+        function handleUpdated() {
+            loadExpenses()
+        }
+
+        loadExpenses()
+        window.addEventListener("transactions:updated", handleUpdated)
+        return () => {
+            window.removeEventListener("transactions:updated", handleUpdated)
+        }
     }, [])
 
     return (
         <div className="fooldal-overview-card expenses-card">
-            <div className="overview-title">Kiadasok</div>
+            <div className="overview-title">Kiadások</div>
             <div className="expenses-grid">
                 {expenses.length === 0 ? (
                     <div className="fooldal-empty">Nincs adat</div>

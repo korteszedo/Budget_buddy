@@ -19,6 +19,51 @@ export async function getBalanceByUserId(userId: number) {
   return rows[0].egyenleg;
 }
 
+export async function findOrCreateCategoryId(name: string, tipus: string) {
+  const [rows]: any = await db.query(
+    `
+    SELECT kategoria_id
+    FROM Kategoria
+    WHERE kategoria_nev = ?
+      AND tipus = ?
+    LIMIT 1
+    `,
+    [name, tipus]
+  );
+
+  if (rows && rows[0]?.kategoria_id) {
+    return rows[0].kategoria_id;
+  }
+
+  const [result]: any = await db.query(
+    `
+    INSERT INTO Kategoria (kategoria_nev, tipus)
+    VALUES (?, ?)
+    `,
+    [name, tipus]
+  );
+
+  return result.insertId ?? 0;
+}
+
+export async function addTransactionForUser(
+  userId: number,
+  categoryId: number,
+  amount: number,
+  type: string,
+  date: string
+) {
+  const [result]: any = await db.query(
+    `
+    INSERT INTO Tranzakcio (felhasznalo_id, kategoria_id, osszeg, datum, tipus)
+    VALUES (?, ?, ?, ?, ?)
+    `,
+    [userId, categoryId, amount, date, type]
+  );
+
+  return result.insertId ?? 0;
+}
+
 
 
 export async function getTransactionList(userId: number) {

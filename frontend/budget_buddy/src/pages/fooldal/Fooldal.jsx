@@ -10,7 +10,7 @@ import GoalsCard from "../../components/fooldal/GoalsCard/GoalsCard"
 
 export function Fooldal() {
     const navigate = useNavigate()
-    const displayName = localStorage.getItem("userName") || "Alex"
+    const displayName = localStorage.getItem("userName") || "Vendég"
 
     useEffect(() => {
         const token = localStorage.getItem("token")
@@ -24,7 +24,7 @@ export function Fooldal() {
             <Navigacio />
 
             <main className="fooldal-main">
-                <div className="fooldal-title">Udvozlunk {displayName}</div>
+                <div className="fooldal-title">Üdvözlünk {displayName}</div>
 
                 <section className="fooldal-hero">
                     <BalanceCard />
@@ -32,7 +32,7 @@ export function Fooldal() {
                     <TransactionsCard />
                 </section>
 
-                <div className="fooldal-section-title">Attekintes</div>
+                <div className="fooldal-section-title">Áttekintés</div>
 
                 <section className="fooldal-overview">
                     <ExpensesCard />
@@ -40,7 +40,7 @@ export function Fooldal() {
                 </section>
 
                 <div className="fooldal-footer">
-                    Erd el az anyagi fuggetlenseget
+                    Érd el az anyagi függetlenséget
                 </div>
             </main>
         </div>

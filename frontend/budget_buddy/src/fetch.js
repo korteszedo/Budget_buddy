@@ -148,6 +148,37 @@ export function getGoals(token) {
     });
 }
 
+export function updateGoal(token, goalId, current) {
+  return fetch(`${API_BASE}/goals/${goalId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      ...buildAuthHeaders(token),
+    },
+    body: JSON.stringify({
+      aktualis_osszeg: current,
+      aktualis: current,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => data)
+    .catch((err) => {
+      console.log("Hiba:", err);
+    });
+}
+
+export function deleteGoal(token, goalId) {
+  return fetch(`${API_BASE}/goals/${goalId}`, {
+    method: "DELETE",
+    headers: buildAuthHeaders(token),
+  })
+    .then((res) => res.json())
+    .then((data) => data)
+    .catch((err) => {
+      console.log("Hiba:", err);
+    });
+}
+
 export function getUsers(token) {
   return fetch(`${API_BASE}/users`, {
     headers: buildAuthHeaders(token),

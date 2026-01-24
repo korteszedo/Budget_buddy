@@ -7,16 +7,23 @@ export default function NewTransactionCard() {
 
     return (
         <div className="fooldal-card fooldal-card-new">
-            <div className="fooldal-card-title">Uj tranzakcio</div>
+            <div className="fooldal-card-title">Új tranzakció</div>
             <button
                 className="fooldal-add-btn"
                 type="button"
                 onClick={() => setShowModal(true)}
             >
-                Hozzaad
+                Hozzáad
             </button>
             {showModal && (
-                <NewTransactionModal onClose={() => setShowModal(false)} />
+                <NewTransactionModal
+                    onClose={() => setShowModal(false)}
+                    onSuccess={() => {
+                        window.dispatchEvent(
+                            new CustomEvent("transactions:updated")
+                        )
+                    }}
+                />
             )}
         </div>
     )

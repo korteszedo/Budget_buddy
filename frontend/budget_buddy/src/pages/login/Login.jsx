@@ -37,12 +37,12 @@ export function Login({ nyit_zar, onSuccess }) {
 
       <div className="login-header">
         <button className="back-btn" onClick={nyit_zar}>
-          <img src={back_arrow} alt="" className="back-arrow" />
+          <img src={back_arrow} alt="Vissza" className="back-arrow" />
         </button>
       </div>
 
       <div className="login-content">
-        <img src={userInterface} alt="" className="user-icon" />
+        <img src={userInterface} alt="Felhasználó" className="user-icon" />
 
         <input 
           type="text" 
