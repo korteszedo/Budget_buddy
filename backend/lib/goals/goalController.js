@@ -37,43 +37,141 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getGoalsController = getGoalsController;
+exports.addGoalController = addGoalController;
+exports.updateGoalController = updateGoalController;
+exports.deleteGoalController = deleteGoalController;
 var goalService_1 = require("./goalService");
-function resolveUserId(req) {
-    var _a;
-    var authIdRaw = (_a = req.auth) === null || _a === void 0 ? void 0 : _a.userId;
-    var authId = typeof authIdRaw === "string" ? Number(authIdRaw) : authIdRaw;
-    if (typeof authId === "number" && Number.isFinite(authId) && authId > 0) {
-        return authId;
-    }
-    var paramId = Number(req.params.userId);
-    if (Number.isFinite(paramId) && paramId > 0) {
-        return paramId;
-    }
-    return null;
-}
 function getGoalsController(req, res) {
     return __awaiter(this, void 0, void 0, function () {
         var userId, goals, err_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
-                    userId = resolveUserId(req);
+                    userId = Number((_a = req.user) === null || _a === void 0 ? void 0 : _a.userId);
                     if (!userId) {
                         return [2 /*return*/, res.status(400).json({ message: "Hianyzik a userId" })];
                     }
-                    _a.label = 1;
+                    _b.label = 1;
                 case 1:
-                    _a.trys.push([1, 3, , 4]);
+                    _b.trys.push([1, 3, , 4]);
                     return [4 /*yield*/, (0, goalService_1.getGoalsByUserId)(userId)];
                 case 2:
-                    goals = _a.sent();
+                    goals = _b.sent();
                     return [2 /*return*/, res.json(goals)];
                 case 3:
-                    err_1 = _a.sent();
+                    err_1 = _b.sent();
                     console.error(err_1);
                     return [2 /*return*/, res.status(500).json({
                             message: "Hiba a célok lekérésekor"
                         })];
+                case 4: return [2 /*return*/];
+            }
+        });
+    });
+}
+function addGoalController(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var userId, name, targetRaw, currentRaw, deadlineRaw, target, current, deadline, safeCurrent, insertId, err_2;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v;
+        return __generator(this, function (_w) {
+            switch (_w.label) {
+                case 0:
+                    userId = Number((_a = req.user) === null || _a === void 0 ? void 0 : _a.userId);
+                    if (!userId) {
+                        return [2 /*return*/, res.status(400).json({ message: "Hianyzik a userId" })];
+                    }
+                    name = ((_e = (_c = (_b = req.body) === null || _b === void 0 ? void 0 : _b.nev) !== null && _c !== void 0 ? _c : (_d = req.body) === null || _d === void 0 ? void 0 : _d.name) !== null && _e !== void 0 ? _e : "").toString().trim();
+                    targetRaw = (_j = (_g = (_f = req.body) === null || _f === void 0 ? void 0 : _f.osszeg_cel) !== null && _g !== void 0 ? _g : (_h = req.body) === null || _h === void 0 ? void 0 : _h.cel) !== null && _j !== void 0 ? _j : (_k = req.body) === null || _k === void 0 ? void 0 : _k.target;
+                    currentRaw = (_p = (_m = (_l = req.body) === null || _l === void 0 ? void 0 : _l.aktualis_osszeg) !== null && _m !== void 0 ? _m : (_o = req.body) === null || _o === void 0 ? void 0 : _o.aktualis) !== null && _p !== void 0 ? _p : (_q = req.body) === null || _q === void 0 ? void 0 : _q.current;
+                    deadlineRaw = (_u = (_s = (_r = req.body) === null || _r === void 0 ? void 0 : _r.hatarido) !== null && _s !== void 0 ? _s : (_t = req.body) === null || _t === void 0 ? void 0 : _t.datum) !== null && _u !== void 0 ? _u : (_v = req.body) === null || _v === void 0 ? void 0 : _v.deadline;
+                    target = Number(targetRaw);
+                    current = Number(currentRaw);
+                    deadline = typeof deadlineRaw === "string" && deadlineRaw.trim() !== ""
+                        ? deadlineRaw
+                        : null;
+                    if (!name || !Number.isFinite(target) || target <= 0) {
+                        return [2 /*return*/, res.status(400).json({ message: "Hibas adatok" })];
+                    }
+                    safeCurrent = Number.isFinite(current) && current > 0 ? current : 0;
+                    _w.label = 1;
+                case 1:
+                    _w.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, (0, goalService_1.addGoalForUser)(userId, name, target, safeCurrent, deadline)];
+                case 2:
+                    insertId = _w.sent();
+                    return [2 /*return*/, res.status(201).json({ id: insertId })];
+                case 3:
+                    err_2 = _w.sent();
+                    console.error(err_2);
+                    return [2 /*return*/, res.status(500).json({ message: "Hiba a cel mentesekor" })];
+                case 4: return [2 /*return*/];
+            }
+        });
+    });
+}
+function updateGoalController(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var userId, goalId, currentRaw, current, affected, err_3;
+        var _a, _b, _c, _d, _e, _f;
+        return __generator(this, function (_g) {
+            switch (_g.label) {
+                case 0:
+                    userId = Number((_a = req.user) === null || _a === void 0 ? void 0 : _a.userId);
+                    if (!userId) {
+                        return [2 /*return*/, res.status(400).json({ message: "Hianyzik a userId" })];
+                    }
+                    goalId = Number(req.params.goalId);
+                    if (!goalId) {
+                        return [2 /*return*/, res.status(400).json({ message: "Hianyzik a cel azonosito" })];
+                    }
+                    currentRaw = (_e = (_c = (_b = req.body) === null || _b === void 0 ? void 0 : _b.aktualis_osszeg) !== null && _c !== void 0 ? _c : (_d = req.body) === null || _d === void 0 ? void 0 : _d.aktualis) !== null && _e !== void 0 ? _e : (_f = req.body) === null || _f === void 0 ? void 0 : _f.current;
+                    current = Number(currentRaw);
+                    if (!Number.isFinite(current) || current < 0) {
+                        return [2 /*return*/, res.status(400).json({ message: "Hibas aktualis osszeg" })];
+                    }
+                    _g.label = 1;
+                case 1:
+                    _g.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, (0, goalService_1.updateGoalProgressForUser)(userId, goalId, current)];
+                case 2:
+                    affected = _g.sent();
+                    return [2 /*return*/, res.json({ affected: affected })];
+                case 3:
+                    err_3 = _g.sent();
+                    console.error(err_3);
+                    return [2 /*return*/, res.status(500).json({ message: "Hiba a cel frissitesekor" })];
+                case 4: return [2 /*return*/];
+            }
+        });
+    });
+}
+function deleteGoalController(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var userId, goalId, affected, err_4;
+        var _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    userId = Number((_a = req.user) === null || _a === void 0 ? void 0 : _a.userId);
+                    if (!userId) {
+                        return [2 /*return*/, res.status(400).json({ message: "Hianyzik a userId" })];
+                    }
+                    goalId = Number(req.params.goalId);
+                    if (!goalId) {
+                        return [2 /*return*/, res.status(400).json({ message: "Hianyzik a cel azonosito" })];
+                    }
+                    _b.label = 1;
+                case 1:
+                    _b.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, (0, goalService_1.deleteGoalForUser)(userId, goalId)];
+                case 2:
+                    affected = _b.sent();
+                    return [2 /*return*/, res.json({ affected: affected })];
+                case 3:
+                    err_4 = _b.sent();
+                    console.error(err_4);
+                    return [2 /*return*/, res.status(500).json({ message: "Hiba a cel torlesekor" })];
                 case 4: return [2 /*return*/];
             }
         });

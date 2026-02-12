@@ -56,9 +56,10 @@ exports.loginUser = loginUser;
 exports.registerUser = registerUser;
 exports.getUserById = getUserById;
 exports.getUsersForAdmin = getUsersForAdmin;
-exports.updateUserForRole2 = updateUserForRole2;
-exports.deleteUserForRole2 = deleteUserForRole2;
+exports.updateUserByAdmin = updateUserByAdmin;
+exports.deleteUserByAdmin = deleteUserByAdmin;
 var db_1 = require("../config/db");
+var USER_ROLE_ID = 1;
 function loginUser(email, password) {
     return __awaiter(this, void 0, void 0, function () {
         var _a, rows;
@@ -81,7 +82,7 @@ function registerUser(name, email, password) {
         var _b;
         return __generator(this, function (_c) {
             switch (_c.label) {
-                case 0: return [4 /*yield*/, db_1.db.query("INSERT INTO Felhasznalo (nev, email, jelszo, szerepkor_id) VALUES (?, ?, ?, ?)", [name, email, password, 2])];
+                case 0: return [4 /*yield*/, db_1.db.query("INSERT INTO Felhasznalo (nev, email, jelszo, szerepkor_id) VALUES (?, ?, ?, ?)", [name, email, password, USER_ROLE_ID])];
                 case 1:
                     _a = __read.apply(void 0, [_c.sent(), 1]), result = _a[0];
                     return [2 /*return*/, (_b = result.insertId) !== null && _b !== void 0 ? _b : 0];
@@ -108,7 +109,7 @@ function getUsersForAdmin() {
         var _a, rows;
         return __generator(this, function (_b) {
             switch (_b.label) {
-                case 0: return [4 /*yield*/, db_1.db.query("\n        SELECT\n            felhasznalo_id,\n            nev,\n            email,\n            szerepkor_id\n        FROM Felhasznalo\n        WHERE szerepkor_id = 2\n        ORDER BY felhasznalo_id DESC\n        ")];
+                case 0: return [4 /*yield*/, db_1.db.query("\n        SELECT\n            felhasznalo_id,\n            nev,\n            email,\n            szerepkor_id\n        FROM Felhasznalo\n        WHERE szerepkor_id = ?\n        ORDER BY felhasznalo_id DESC\n        ", [USER_ROLE_ID])];
                 case 1:
                     _a = __read.apply(void 0, [_b.sent(), 1]), rows = _a[0];
                     return [2 /*return*/, rows];
@@ -116,7 +117,7 @@ function getUsersForAdmin() {
         });
     });
 }
-function updateUserForRole2(userId, name, email, password) {
+function updateUserByAdmin(userId, name, email, password) {
     return __awaiter(this, void 0, void 0, function () {
         var updates, values, _a, result;
         var _b;
@@ -140,8 +141,8 @@ function updateUserForRole2(userId, name, email, password) {
                     if (updates.length === 0) {
                         return [2 /*return*/, 0];
                     }
-                    values.push(userId);
-                    return [4 /*yield*/, db_1.db.query("\n        UPDATE Felhasznalo\n        SET ".concat(updates.join(", "), "\n        WHERE felhasznalo_id = ?\n          AND szerepkor_id = 2\n        "), values)];
+                    values.push(userId, USER_ROLE_ID);
+                    return [4 /*yield*/, db_1.db.query("\n        UPDATE Felhasznalo\n        SET ".concat(updates.join(", "), "\n        WHERE felhasznalo_id = ?\n          AND szerepkor_id = ?\n        "), values)];
                 case 1:
                     _a = __read.apply(void 0, [_c.sent(), 1]), result = _a[0];
                     return [2 /*return*/, (_b = result.affectedRows) !== null && _b !== void 0 ? _b : 0];
@@ -149,13 +150,13 @@ function updateUserForRole2(userId, name, email, password) {
         });
     });
 }
-function deleteUserForRole2(userId) {
+function deleteUserByAdmin(userId) {
     return __awaiter(this, void 0, void 0, function () {
         var _a, result;
         var _b;
         return __generator(this, function (_c) {
             switch (_c.label) {
-                case 0: return [4 /*yield*/, db_1.db.query("\n        DELETE FROM Felhasznalo\n        WHERE felhasznalo_id = ?\n          AND szerepkor_id = 2\n        ", [userId])];
+                case 0: return [4 /*yield*/, db_1.db.query("\n        DELETE FROM Felhasznalo\n        WHERE felhasznalo_id = ?\n          AND szerepkor_id = ?\n        ", [userId, USER_ROLE_ID])];
                 case 1:
                     _a = __read.apply(void 0, [_c.sent(), 1]), result = _a[0];
                     return [2 /*return*/, (_b = result.affectedRows) !== null && _b !== void 0 ? _b : 0];

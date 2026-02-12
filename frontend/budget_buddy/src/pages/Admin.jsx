@@ -17,7 +17,6 @@ export default function Admin() {
     useEffect(() => {
         const token = localStorage.getItem("token")
         if (!token) {
-            setUsers([])
             navigate("/", { replace: true })
             return
         }

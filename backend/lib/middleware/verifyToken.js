@@ -6,13 +6,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var config_1 = __importDefault(require("../config/config"));
 var verifyToken = function (req, res, next) {
-    var _a, _b;
-    var bodyToken = typeof ((_a = req.body) === null || _a === void 0 ? void 0 : _a.token) === "string" ? req.body.token : undefined;
-    var queryToken = typeof ((_b = req.query) === null || _b === void 0 ? void 0 : _b.token) === "string" ? req.query.token : undefined;
-    var headerToken = typeof req.headers["x-access-token"] === "string" ? req.headers["x-access-token"] : undefined;
-    var authHeader = req.headers.authorization;
-    var bearerToken = (authHeader === null || authHeader === void 0 ? void 0 : authHeader.startsWith("Bearer ")) ? authHeader.slice(7) : undefined;
-    var token = bodyToken || queryToken || headerToken || bearerToken;
+    var _a, _b, _c;
+    var token;
+    if (typeof ((_a = req.body) === null || _a === void 0 ? void 0 : _a.token) === "string") {
+        token = req.body.token;
+    }
+    if (!token && typeof ((_b = req.query) === null || _b === void 0 ? void 0 : _b.token) === "string") {
+        token = req.query.token;
+    }
+    if (!token && typeof req.headers["x-access-token"] === "string") {
+        token = req.headers["x-access-token"];
+    }
+    if (!token && ((_c = req.headers.authorization) === null || _c === void 0 ? void 0 : _c.startsWith("Bearer "))) {
+        token = req.headers.authorization.slice(7);
+    }
     if (!token) {
         return res.status(403).json({ message: "Token szukseges a hozzafereshez" });
     }
@@ -25,10 +32,10 @@ var verifyToken = function (req, res, next) {
         if (typeof decoded === "string") {
             return res.status(401).json({ message: "Ervenytelen token" });
         }
-        req.auth = decoded;
+        req.user = decoded;
         return next();
     }
-    catch (_c) {
+    catch (_d) {
         return res.status(401).json({ message: "Ervenytelen token" });
     }
 };

@@ -40,42 +40,27 @@ exports.getUsersController = getUsersController;
 exports.updateUserController = updateUserController;
 exports.deleteUserController = deleteUserController;
 var userServices_1 = require("./userServices");
-var ADMIN_ROLE_ID = 1;
-function resolveRoleId(req) {
-    var _a;
-    var roleIdRaw = (_a = req.auth) === null || _a === void 0 ? void 0 : _a.roleId;
-    var roleId = typeof roleIdRaw === "string" ? Number(roleIdRaw) : roleIdRaw;
-    if (typeof roleId === "number" && Number.isFinite(roleId)) {
-        return roleId;
-    }
-    return null;
-}
-function ensureAdmin(req, res) {
-    var roleId = resolveRoleId(req);
-    if (roleId !== ADMIN_ROLE_ID) {
-        res.status(403).json({ message: "Nincs jogosultsag" });
-        return false;
-    }
-    return true;
-}
+var ADMIN_ROLE_ID = 2;
 function getUsersController(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var users, err_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var roleId, users, err_1;
+        var _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
-                    if (!ensureAdmin(req, res)) {
-                        return [2 /*return*/];
+                    roleId = Number((_a = req.user) === null || _a === void 0 ? void 0 : _a.roleId);
+                    if (roleId !== ADMIN_ROLE_ID) {
+                        return [2 /*return*/, res.status(403).json({ message: "Nincs jogosultsag" })];
                     }
-                    _a.label = 1;
+                    _b.label = 1;
                 case 1:
-                    _a.trys.push([1, 3, , 4]);
+                    _b.trys.push([1, 3, , 4]);
                     return [4 /*yield*/, (0, userServices_1.getUsersForAdmin)()];
                 case 2:
-                    users = _a.sent();
+                    users = _b.sent();
                     return [2 /*return*/, res.json(users)];
                 case 3:
-                    err_1 = _a.sent();
+                    err_1 = _b.sent();
                     console.error(err_1);
                     return [2 /*return*/, res.status(500).json({ message: "Hiba a felhasznalok lekeresekor" })];
                 case 4: return [2 /*return*/];
@@ -85,27 +70,28 @@ function getUsersController(req, res) {
 }
 function updateUserController(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var userId, name, email, password, affected, err_2;
-        var _a, _b, _c;
-        return __generator(this, function (_d) {
-            switch (_d.label) {
+        var roleId, userId, name, email, password, affected, err_2;
+        var _a, _b, _c, _d;
+        return __generator(this, function (_e) {
+            switch (_e.label) {
                 case 0:
-                    if (!ensureAdmin(req, res)) {
-                        return [2 /*return*/];
+                    roleId = Number((_a = req.user) === null || _a === void 0 ? void 0 : _a.roleId);
+                    if (roleId !== ADMIN_ROLE_ID) {
+                        return [2 /*return*/, res.status(403).json({ message: "Nincs jogosultsag" })];
                     }
                     userId = Number(req.params.userId);
-                    name = (_b = (_a = req.body.name) !== null && _a !== void 0 ? _a : req.body.username) !== null && _b !== void 0 ? _b : req.body.nev;
+                    name = (_c = (_b = req.body.name) !== null && _b !== void 0 ? _b : req.body.username) !== null && _c !== void 0 ? _c : req.body.nev;
                     email = req.body.email;
-                    password = (_c = req.body.password) !== null && _c !== void 0 ? _c : req.body.jelszo;
-                    _d.label = 1;
+                    password = (_d = req.body.password) !== null && _d !== void 0 ? _d : req.body.jelszo;
+                    _e.label = 1;
                 case 1:
-                    _d.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, (0, userServices_1.updateUserForRole2)(userId, name, email, password)];
+                    _e.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, (0, userServices_1.updateUserByAdmin)(userId, name, email, password)];
                 case 2:
-                    affected = _d.sent();
+                    affected = _e.sent();
                     return [2 /*return*/, res.json({ affected: affected })];
                 case 3:
-                    err_2 = _d.sent();
+                    err_2 = _e.sent();
                     console.error(err_2);
                     return [2 /*return*/, res.status(500).json({ message: "Hiba a felhasznalo frissitesekor" })];
                 case 4: return [2 /*return*/];
@@ -115,23 +101,25 @@ function updateUserController(req, res) {
 }
 function deleteUserController(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var userId, affected, err_3;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var roleId, userId, affected, err_3;
+        var _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
-                    if (!ensureAdmin(req, res)) {
-                        return [2 /*return*/];
+                    roleId = Number((_a = req.user) === null || _a === void 0 ? void 0 : _a.roleId);
+                    if (roleId !== ADMIN_ROLE_ID) {
+                        return [2 /*return*/, res.status(403).json({ message: "Nincs jogosultsag" })];
                     }
                     userId = Number(req.params.userId);
-                    _a.label = 1;
+                    _b.label = 1;
                 case 1:
-                    _a.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, (0, userServices_1.deleteUserForRole2)(userId)];
+                    _b.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, (0, userServices_1.deleteUserByAdmin)(userId)];
                 case 2:
-                    affected = _a.sent();
+                    affected = _b.sent();
                     return [2 /*return*/, res.json({ affected: affected })];
                 case 3:
-                    err_3 = _a.sent();
+                    err_3 = _b.sent();
                     console.error(err_3);
                     return [2 /*return*/, res.status(500).json({ message: "Hiba a felhasznalo torlesekor" })];
                 case 4: return [2 /*return*/];

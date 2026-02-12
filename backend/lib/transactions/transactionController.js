@@ -36,45 +36,116 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.addTransactionController = addTransactionController;
 exports.getBalanceController = getBalanceController;
 exports.getTransactionListController = getTransactionListController;
 exports.getExpensesByCategoryController = getExpensesByCategoryController;
 var transactionService_1 = require("./transactionService");
-function resolveUserId(req) {
-    var _a;
-    var authIdRaw = (_a = req.auth) === null || _a === void 0 ? void 0 : _a.userId;
-    var authId = typeof authIdRaw === "string" ? Number(authIdRaw) : authIdRaw;
-    if (typeof authId === "number" && Number.isFinite(authId) && authId > 0) {
-        return authId;
-    }
-    var paramId = Number(req.params.userId);
-    if (Number.isFinite(paramId) && paramId > 0) {
-        return paramId;
-    }
-    return null;
+function formatDate(date) {
+    return date.toISOString().slice(0, 10);
 }
-function getBalanceController(req, res) {
+function normalizeDate(value) {
+    if (typeof value === "string") {
+        var trimmed = value.trim();
+        if (trimmed.length === 0) {
+            return formatDate(new Date());
+        }
+        if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+            return trimmed;
+        }
+        var parsed = new Date(trimmed);
+        if (!Number.isNaN(parsed.getTime())) {
+            return formatDate(parsed);
+        }
+    }
+    return formatDate(new Date());
+}
+function addTransactionController(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var userId, balance, err_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var userId, type, amountRaw, amount, categoryRaw, categoryText, categoryIdRaw, categoryIdValue, categoryId, err_1, date, insertId, err_2;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
+        return __generator(this, function (_s) {
+            switch (_s.label) {
                 case 0:
-                    userId = resolveUserId(req);
+                    userId = Number((_a = req.user) === null || _a === void 0 ? void 0 : _a.userId);
                     if (!userId) {
                         return [2 /*return*/, res.status(400).json({ message: "Hianyzik a userId" })];
                     }
-                    _a.label = 1;
+                    type = (_c = (_b = req.body) === null || _b === void 0 ? void 0 : _b.tipus) !== null && _c !== void 0 ? _c : (_d = req.body) === null || _d === void 0 ? void 0 : _d.type;
+                    if (type !== "bevetel" && type !== "kiadas") {
+                        return [2 /*return*/, res.status(400).json({ message: "Hibas tipus" })];
+                    }
+                    amountRaw = (_f = (_e = req.body) === null || _e === void 0 ? void 0 : _e.osszeg) !== null && _f !== void 0 ? _f : (_g = req.body) === null || _g === void 0 ? void 0 : _g.amount;
+                    amount = Number(amountRaw);
+                    if (!Number.isFinite(amount) || amount <= 0) {
+                        return [2 /*return*/, res.status(400).json({ message: "Hibas osszeg" })];
+                    }
+                    categoryRaw = (_j = (_h = req.body) === null || _h === void 0 ? void 0 : _h.kategoria) !== null && _j !== void 0 ? _j : (_k = req.body) === null || _k === void 0 ? void 0 : _k.category;
+                    categoryText = typeof categoryRaw === "string" ? categoryRaw.trim() : "";
+                    categoryIdRaw = (_m = (_l = req.body) === null || _l === void 0 ? void 0 : _l.kategoria_id) !== null && _m !== void 0 ? _m : (_o = req.body) === null || _o === void 0 ? void 0 : _o.categoryId;
+                    categoryIdValue = Number(categoryIdRaw);
+                    categoryId = 0;
+                    _s.label = 1;
                 case 1:
-                    _a.trys.push([1, 3, , 4]);
+                    _s.trys.push([1, 5, , 6]);
+                    if (!(Number.isFinite(categoryIdValue) && categoryIdValue > 0)) return [3 /*break*/, 2];
+                    categoryId = categoryIdValue;
+                    return [3 /*break*/, 4];
+                case 2:
+                    if (!categoryText) return [3 /*break*/, 4];
+                    return [4 /*yield*/, (0, transactionService_1.findOrCreateCategoryId)(categoryText, type)];
+                case 3:
+                    categoryId = _s.sent();
+                    _s.label = 4;
+                case 4: return [3 /*break*/, 6];
+                case 5:
+                    err_1 = _s.sent();
+                    console.error(err_1);
+                    return [2 /*return*/, res.status(500).json({ message: "Hiba a kategoria menteseor" })];
+                case 6:
+                    if (!categoryId) {
+                        return [2 /*return*/, res.status(400).json({ message: "Hibas kategoria" })];
+                    }
+                    date = normalizeDate((_q = (_p = req.body) === null || _p === void 0 ? void 0 : _p.datum) !== null && _q !== void 0 ? _q : (_r = req.body) === null || _r === void 0 ? void 0 : _r.date);
+                    _s.label = 7;
+                case 7:
+                    _s.trys.push([7, 9, , 10]);
+                    return [4 /*yield*/, (0, transactionService_1.addTransactionForUser)(userId, categoryId, amount, type, date)];
+                case 8:
+                    insertId = _s.sent();
+                    return [2 /*return*/, res.status(201).json({ id: insertId })];
+                case 9:
+                    err_2 = _s.sent();
+                    console.error(err_2);
+                    return [2 /*return*/, res.status(500).json({ message: "Hiba a tranzakcio menteseor" })];
+                case 10: return [2 /*return*/];
+            }
+        });
+    });
+}
+function getBalanceController(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var userId, balance, err_3;
+        var _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    userId = Number((_a = req.user) === null || _a === void 0 ? void 0 : _a.userId);
+                    if (!userId) {
+                        return [2 /*return*/, res.status(400).json({ message: "Hianyzik a userId" })];
+                    }
+                    _b.label = 1;
+                case 1:
+                    _b.trys.push([1, 3, , 4]);
                     return [4 /*yield*/, (0, transactionService_1.getBalanceByUserId)(userId)];
                 case 2:
-                    balance = _a.sent();
+                    balance = _b.sent();
                     return [2 /*return*/, res.json({
                             egyenleg: balance
                         })];
                 case 3:
-                    err_1 = _a.sent();
-                    console.error(err_1);
+                    err_3 = _b.sent();
+                    console.error(err_3);
                     return [2 /*return*/, res.status(500).json({ message: "Hiba egyenleg lekérésekor" })];
                 case 4: return [2 /*return*/];
             }
@@ -83,24 +154,25 @@ function getBalanceController(req, res) {
 }
 function getTransactionListController(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var userId, list, err_2;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var userId, list, err_4;
+        var _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
-                    userId = resolveUserId(req);
+                    userId = Number((_a = req.user) === null || _a === void 0 ? void 0 : _a.userId);
                     if (!userId) {
                         return [2 /*return*/, res.status(400).json({ message: "Hianyzik a userId" })];
                     }
-                    _a.label = 1;
+                    _b.label = 1;
                 case 1:
-                    _a.trys.push([1, 3, , 4]);
+                    _b.trys.push([1, 3, , 4]);
                     return [4 /*yield*/, (0, transactionService_1.getTransactionList)(userId)];
                 case 2:
-                    list = _a.sent();
+                    list = _b.sent();
                     return [2 /*return*/, res.json(list)];
                 case 3:
-                    err_2 = _a.sent();
-                    console.error(err_2);
+                    err_4 = _b.sent();
+                    console.error(err_4);
                     return [2 /*return*/, res.status(500).json({ message: "Hiba a tranzakciók lekérésekor" })];
                 case 4: return [2 /*return*/];
             }
@@ -109,24 +181,25 @@ function getTransactionListController(req, res) {
 }
 function getExpensesByCategoryController(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var userId, data, err_3;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var userId, data, err_5;
+        var _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
-                    userId = resolveUserId(req);
+                    userId = Number((_a = req.user) === null || _a === void 0 ? void 0 : _a.userId);
                     if (!userId) {
                         return [2 /*return*/, res.status(400).json({ message: "Hianyzik a userId" })];
                     }
-                    _a.label = 1;
+                    _b.label = 1;
                 case 1:
-                    _a.trys.push([1, 3, , 4]);
+                    _b.trys.push([1, 3, , 4]);
                     return [4 /*yield*/, (0, transactionService_1.getExpenseSumsByCategory)(userId)];
                 case 2:
-                    data = _a.sent();
+                    data = _b.sent();
                     return [2 /*return*/, res.json(data)];
                 case 3:
-                    err_3 = _a.sent();
-                    console.error(err_3);
+                    err_5 = _b.sent();
+                    console.error(err_5);
                     return [2 /*return*/, res.status(500).json({ message: "Hiba a kategória összesítésnél" })];
                 case 4: return [2 /*return*/];
             }

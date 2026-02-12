@@ -53,6 +53,8 @@ var __read = (this && this.__read) || function (o, n) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getBalanceByUserId = getBalanceByUserId;
+exports.findOrCreateCategoryId = findOrCreateCategoryId;
+exports.addTransactionForUser = addTransactionForUser;
 exports.getTransactionList = getTransactionList;
 exports.updateTransactionForRole2 = updateTransactionForRole2;
 exports.deleteTransactionForRole2 = deleteTransactionForRole2;
@@ -68,6 +70,40 @@ function getBalanceByUserId(userId) {
                 case 1:
                     _a = __read.apply(void 0, [_b.sent(), 1]), rows = _a[0];
                     return [2 /*return*/, rows[0].egyenleg];
+            }
+        });
+    });
+}
+function findOrCreateCategoryId(name, tipus) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, rows, _b, result;
+        var _c, _d;
+        return __generator(this, function (_e) {
+            switch (_e.label) {
+                case 0: return [4 /*yield*/, db_1.db.query("\n    SELECT kategoria_id\n    FROM Kategoria\n    WHERE kategoria_nev = ?\n      AND tipus = ?\n    LIMIT 1\n    ", [name, tipus])];
+                case 1:
+                    _a = __read.apply(void 0, [_e.sent(), 1]), rows = _a[0];
+                    if (rows && ((_c = rows[0]) === null || _c === void 0 ? void 0 : _c.kategoria_id)) {
+                        return [2 /*return*/, rows[0].kategoria_id];
+                    }
+                    return [4 /*yield*/, db_1.db.query("\n    INSERT INTO Kategoria (kategoria_nev, tipus)\n    VALUES (?, ?)\n    ", [name, tipus])];
+                case 2:
+                    _b = __read.apply(void 0, [_e.sent(), 1]), result = _b[0];
+                    return [2 /*return*/, (_d = result.insertId) !== null && _d !== void 0 ? _d : 0];
+            }
+        });
+    });
+}
+function addTransactionForUser(userId, categoryId, amount, type, date) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, result;
+        var _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0: return [4 /*yield*/, db_1.db.query("\n    INSERT INTO Tranzakcio (felhasznalo_id, kategoria_id, osszeg, datum, tipus)\n    VALUES (?, ?, ?, ?, ?)\n    ", [userId, categoryId, amount, date, type])];
+                case 1:
+                    _a = __read.apply(void 0, [_c.sent(), 1]), result = _a[0];
+                    return [2 /*return*/, (_b = result.insertId) !== null && _b !== void 0 ? _b : 0];
             }
         });
     });

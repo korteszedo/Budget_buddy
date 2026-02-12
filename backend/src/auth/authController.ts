@@ -37,6 +37,8 @@ export async function loginController(req: Request, res: Response) {
             message: "Sikeres bejelentkezes",
             userId,
             token,
+            nev: user.nev,
+            name: user.nev,
             szerepkor_id: roleId,
             roleId
         });

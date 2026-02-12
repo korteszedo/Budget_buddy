@@ -32,6 +32,11 @@ export function Register({nyit_zar_register}){
         }).then((data) => {
             if (data && data.token) {
                 localStorage.setItem("token", data.token);
+                const userName =
+                    data.nev ?? data.name ?? data.username ?? data.userName ?? "";
+                if (userName) {
+                    localStorage.setItem("userName", userName);
+                }
                 const rawRoleId = data.szerepkor_id ?? data.role_id ?? data.roleId;
                 const roleId = typeof rawRoleId === "string" ? Number(rawRoleId) : rawRoleId;
                 navigate(roleId === 2 ? "/admin" : "/fooldal")

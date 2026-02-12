@@ -4,15 +4,15 @@ import { Register } from '../register/Register'
 
 import logo from "../../img/logo.png"
 import login from "../../img/login.png"
-import test1 from "../../img/test1.png"
-import test2 from "../../img/test2.png"
-import test3 from "../../img/test3.png"
+import kep1 from "../../img/kep1.png"
+import kep2 from "../../img/kep2.png"
+import kep3 from "../../img/kep3.png"
 import right_arrow from "../../img/right-arrow.png"
 import registration from "../../img/registration.png"
 
 export function Kezdolap() {
 
-  const images = [test1, test2, test3];
+  const images = [kep1, kep2, kep3];
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const [loginshow, setLoginshow] = useState(false);

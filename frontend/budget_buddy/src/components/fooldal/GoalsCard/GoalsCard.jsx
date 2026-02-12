@@ -7,6 +7,22 @@ function formatFt(value) {
     return `${number.toLocaleString("hu-HU")} Ft`
 }
 
+function getGoalCurrent(goal) {
+    return Number(goal.aktualis ?? goal.aktualis_osszeg ?? 0) || 0
+}
+
+function getGoalTarget(goal) {
+    return Number(goal.cel ?? goal.osszeg_cel ?? 0) || 0
+}
+
+function isGoalComplete(goal) {
+    const target = getGoalTarget(goal)
+    if (!target) {
+        return false
+    }
+    return getGoalCurrent(goal) >= target
+}
+
 export default function GoalsCard() {
     const [goals, setGoals] = useState([])
 
@@ -18,7 +34,8 @@ export default function GoalsCard() {
 
         getGoals(token).then((data) => {
             if (Array.isArray(data)) {
-                setGoals(data.slice(0, 2))
+                const visibleGoals = data.filter((goal) => !isGoalComplete(goal))
+                setGoals(visibleGoals.slice(0, 2))
             } else {
                 setGoals([])
             }
@@ -33,8 +50,8 @@ export default function GoalsCard() {
                     <div className="fooldal-empty">Nincs adat</div>
                 ) : (
                     goals.map((goal, index) => {
-                        const current = Number(goal.aktualis) || 0
-                        const target = Number(goal.cel) || 0
+                        const current = getGoalCurrent(goal)
+                        const target = getGoalTarget(goal)
                         const progress =
                             target > 0
                                 ? Math.min(

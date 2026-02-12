@@ -53,6 +53,9 @@ var __read = (this && this.__read) || function (o, n) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getGoalsByUserId = getGoalsByUserId;
+exports.addGoalForUser = addGoalForUser;
+exports.updateGoalProgressForUser = updateGoalProgressForUser;
+exports.deleteGoalForUser = deleteGoalForUser;
 var db_1 = require("../config/db");
 function getGoalsByUserId(userId) {
     return __awaiter(this, void 0, void 0, function () {
@@ -63,6 +66,48 @@ function getGoalsByUserId(userId) {
                 case 1:
                     _a = __read.apply(void 0, [_b.sent(), 1]), rows = _a[0];
                     return [2 /*return*/, rows];
+            }
+        });
+    });
+}
+function addGoalForUser(userId, name, target, current, deadline) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, result;
+        var _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0: return [4 /*yield*/, db_1.db.query("\n    INSERT INTO Cel (felhasznalo_id, nev, osszeg_cel, aktualis_osszeg, hatarido)\n    VALUES (?, ?, ?, ?, ?)\n    ", [userId, name, target, current, deadline])];
+                case 1:
+                    _a = __read.apply(void 0, [_c.sent(), 1]), result = _a[0];
+                    return [2 /*return*/, (_b = result.insertId) !== null && _b !== void 0 ? _b : 0];
+            }
+        });
+    });
+}
+function updateGoalProgressForUser(userId, goalId, current) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, result;
+        var _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0: return [4 /*yield*/, db_1.db.query("\n    UPDATE Cel\n    SET aktualis_osszeg = ?\n    WHERE cel_id = ?\n      AND felhasznalo_id = ?\n    ", [current, goalId, userId])];
+                case 1:
+                    _a = __read.apply(void 0, [_c.sent(), 1]), result = _a[0];
+                    return [2 /*return*/, (_b = result.affectedRows) !== null && _b !== void 0 ? _b : 0];
+            }
+        });
+    });
+}
+function deleteGoalForUser(userId, goalId) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, result;
+        var _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0: return [4 /*yield*/, db_1.db.query("\n    DELETE FROM Cel\n    WHERE cel_id = ?\n      AND felhasznalo_id = ?\n    ", [goalId, userId])];
+                case 1:
+                    _a = __read.apply(void 0, [_c.sent(), 1]), result = _a[0];
+                    return [2 /*return*/, (_b = result.affectedRows) !== null && _b !== void 0 ? _b : 0];
             }
         });
     });
