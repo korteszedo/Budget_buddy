@@ -4,9 +4,13 @@ import { useRef, useState } from "react";
 import { Register } from "../register/Register";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../fetch";
+import { validateLoginInputs, validationMessages } from "../validation";
 
 import userInterface from "../../img/user-interface.png"
 import back_arrow from "../../img/back-arrow.png"
+
+const MAX_EMAIL_LENGTH = 100;
+const MAX_PASSWORD_LENGTH = 64;
 
 export function Login({ nyit_zar }) {
 
@@ -18,10 +22,42 @@ export function Login({ nyit_zar }) {
   const passInput = useRef();
 
   function handleClick() {
-    const email = emailInput.current.value;
-    const jelszo = passInput.current.value;
+    const emailEl = emailInput.current;
+    const passEl = passInput.current;
+    if (!emailEl || !passEl) {
+      return;
+    }
+
+    const validationError = validateLoginInputs({
+      email: emailEl.value,
+      password: passEl.value,
+      maxEmailLength: MAX_EMAIL_LENGTH,
+      maxPasswordLength: MAX_PASSWORD_LENGTH,
+    });
+    if (validationError) {
+      if (validationError === validationMessages.emailMissingAt) {
+        emailEl.setCustomValidity("");
+        alert(validationError);
+        emailEl.setCustomValidity(validationMessages.emailMissingAt);
+        emailEl.reportValidity();
+      } else {
+        alert(validationError);
+      }
+      return;
+    }
+    const email = emailEl.value.trim();
+    const jelszo = passEl.value;
 
     login(email, jelszo).then((data) => {
+      if (!data || !data.token) {
+        const message = data?.message ?? "";
+        if (message.toLowerCase().includes("hibas")) {
+          alert("Helytelen email vagy jelszo.");
+        } else {
+          alert(message || "Sikertelen bejelentkezes.");
+        }
+        return;
+      }
       if (data && data.token) {
         localStorage.setItem("token", data.token);
         const userName =
@@ -31,6 +67,9 @@ export function Login({ nyit_zar }) {
         }
         const rawRoleId = data.szerepkor_id ?? data.role_id ?? data.roleId;
         const roleId = typeof rawRoleId === "string" ? Number(rawRoleId) : rawRoleId;
+        if (typeof roleId === "number" && !Number.isNaN(roleId)) {
+          localStorage.setItem("roleId", String(roleId));
+        }
         navigate(roleId === 2 ? "/admin" : "/fooldal")
       }
     });
@@ -47,28 +86,31 @@ export function Login({ nyit_zar }) {
       </div>
 
       <div className="login-content">
-        <img src={userInterface} alt="Felhasználó" className="user-icon" />
+        <img src={userInterface} alt="FelhasznĂ„â€šĂ‹â€ˇlĂ„â€šÄąâ€š" className="user-icon" />
 
         <input 
-          type="text" 
-          placeholder="Email cím" 
+          type="email" 
+          placeholder="Email cĂ„â€šĂ‚Â­m" 
           ref={emailInput} 
           className="input" 
+          maxLength={MAX_EMAIL_LENGTH}
+          onInput={(e) => e.currentTarget.setCustomValidity("")}
         />
 
         <input 
           type="password" 
-          placeholder="Jelszó" 
+          placeholder="JelszĂ„â€šÄąâ€š" 
           ref={passInput} 
           className="input" 
+          maxLength={MAX_PASSWORD_LENGTH}
         />
 
         <button className="login-button" onClick={handleClick}>
-          Bejelentkezés
+          BejelentkezĂ„â€šĂ‚Â©s
         </button>
 
         <p className="no-account" onClick={() => setRegistershow(true)}>
-          Még nincs fiókod?
+          MĂ„â€šĂ‚Â©g nincs fiĂ„â€šÄąâ€škod?
         </p>
       </div>
 

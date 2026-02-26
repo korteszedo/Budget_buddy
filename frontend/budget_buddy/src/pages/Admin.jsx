@@ -6,6 +6,9 @@ import edit from "../img/edit.png"
 import kuka from "../img/kuka_icon.png"
 import logo from "../img/logo.png"
 
+const MAX_NAME_LENGTH = 50
+const MAX_EMAIL_LENGTH = 100
+
 export default function Admin() {
     const [users, setUsers] = useState([])
     const [editingUserId, setEditingUserId] = useState(null)
@@ -72,6 +75,27 @@ export default function Admin() {
         const nameValue = editName.trim()
         const emailValue = editEmail.trim()
 
+        if (!nameValue) {
+            alert("A nev megadasa kotelezo.")
+            return
+        }
+        if (nameValue.length > MAX_NAME_LENGTH) {
+            alert("A nev tul hosszu.")
+            return
+        }
+        if (!emailValue) {
+            alert("Az email megadasa kotelezo.")
+            return
+        }
+        if (emailValue.length > MAX_EMAIL_LENGTH) {
+            alert("Az email cim tul hosszu.")
+            return
+        }
+        if (!emailValue.includes("@")) {
+            alert("Az email cimnek tartalmaznia kell @ jelet.")
+            return
+        }
+
         setIsSaving(true)
         editUser(token, userId, nameValue, emailValue)
             .then(() => {
@@ -111,6 +135,7 @@ export default function Admin() {
     function handleExit() {
         localStorage.removeItem("token")
         localStorage.removeItem("userName")
+        localStorage.removeItem("roleId")
         navigate("/", { replace: true })
     }
 
@@ -148,6 +173,7 @@ export default function Admin() {
                                             <input
                                                 className="admin-edit-input"
                                                 type="text"
+                                                maxLength={MAX_NAME_LENGTH}
                                                 value={editName}
                                                 onChange={(event) =>
                                                     setEditName(
@@ -164,6 +190,7 @@ export default function Admin() {
                                             <input
                                                 className="admin-edit-input"
                                                 type="email"
+                                                maxLength={MAX_EMAIL_LENGTH}
                                                 value={editEmail}
                                                 onChange={(event) =>
                                                     setEditEmail(
@@ -260,6 +287,7 @@ export default function Admin() {
                                                 <input
                                                     className="admin-edit-input"
                                                     type="text"
+                                                    maxLength={MAX_NAME_LENGTH}
                                                     value={editName}
                                                     onChange={(event) =>
                                                         setEditName(
@@ -276,6 +304,7 @@ export default function Admin() {
                                                 <input
                                                     className="admin-edit-input"
                                                     type="email"
+                                                    maxLength={MAX_EMAIL_LENGTH}
                                                     value={editEmail}
                                                     onChange={(event) =>
                                                         setEditEmail(

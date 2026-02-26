@@ -11,6 +11,7 @@ export default function Navigacio() {
     function handleLogout() {
         localStorage.removeItem("token")
         localStorage.removeItem("userName")
+        localStorage.removeItem("roleId")
         navigate("/", { replace: true })
     }
 

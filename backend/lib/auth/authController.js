@@ -78,6 +78,8 @@ function loginController(req, res) {
                             message: "Sikeres bejelentkezes",
                             userId: userId,
                             token: token,
+                            nev: user.nev,
+                            name: user.nev,
                             szerepkor_id: roleId,
                             roleId: roleId
                         })];

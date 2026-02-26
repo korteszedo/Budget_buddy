@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Login } from '../login/Login'
 import { Register } from '../register/Register'
+import { useNavigate } from "react-router-dom"
 
 import logo from "../../img/logo.png"
 import login from "../../img/login.png"
@@ -11,12 +12,23 @@ import right_arrow from "../../img/right-arrow.png"
 import registration from "../../img/registration.png"
 
 export function Kezdolap() {
+  const navigate = useNavigate()
 
   const images = [kep1, kep2, kep3];
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const [loginshow, setLoginshow] = useState(false);
   const [registershow, setRegisterShow] = useState(false)
+
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    if (!token) {
+      return
+    }
+    const storedRoleId = localStorage.getItem("roleId")
+    const roleId = storedRoleId ? Number(storedRoleId) : null
+    navigate(roleId === 2 ? "/admin" : "/fooldal", { replace: true })
+  }, [navigate])
 
   const nextImage = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length);

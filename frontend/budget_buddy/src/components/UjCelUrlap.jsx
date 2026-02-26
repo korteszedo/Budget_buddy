@@ -5,6 +5,9 @@ import { addGoal } from "../fetch"
 import logo from "../img/logo.png"
 import backArrow from "../img/back-arrow.png"
 
+const MAX_GOAL_NAME_LENGTH = 50
+const MAX_TARGET_AMOUNT = 100000000
+
 export function UjCelUrlap({ nyit_zar, onSuccess }) {
     const nameInput = useRef()
     const targetInput = useRef()
@@ -17,9 +20,30 @@ export function UjCelUrlap({ nyit_zar, onSuccess }) {
         }
 
         const name = nameInput.current.value.trim()
+        if (!name) {
+            alert("Add meg a cel nevet.")
+            return
+        }
+        if (name.length > MAX_GOAL_NAME_LENGTH) {
+            alert("A cel neve tul hosszu.")
+            return
+        }
+
         const targetValue = Number(targetInput.current.value)
-        const target = Number.isFinite(targetValue) ? targetValue : 0
+        if (!Number.isFinite(targetValue) || targetValue <= 0) {
+            alert("Adj meg ervenyes celosszeget.")
+            return
+        }
+        if (targetValue > MAX_TARGET_AMOUNT) {
+            alert("A celosszeg tul nagy.")
+            return
+        }
+        const target = targetValue
         const deadline = dateInput.current.value
+        if (!deadline) {
+            alert("Add meg a hataridot.")
+            return
+        }
 
         addGoal(token, name, target, 0, deadline).then(() => {
             if (onSuccess) {
@@ -54,6 +78,7 @@ export function UjCelUrlap({ nyit_zar, onSuccess }) {
                 <input
                     className="ujcel-input"
                     type="text"
+                    maxLength={MAX_GOAL_NAME_LENGTH}
                     placeholder="Cél neve"
                     ref={nameInput}
                 />
@@ -61,6 +86,8 @@ export function UjCelUrlap({ nyit_zar, onSuccess }) {
                     className="ujcel-input"
                     type="number"
                     step="1"
+                    min="1"
+                    max={MAX_TARGET_AMOUNT}
                     placeholder="Célösszeg"
                     ref={targetInput}
                 />

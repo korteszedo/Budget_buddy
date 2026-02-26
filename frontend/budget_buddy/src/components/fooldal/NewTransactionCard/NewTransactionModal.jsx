@@ -5,6 +5,9 @@ import { addTransaction } from "../../../fetch"
 import logo from "../../../img/logo.png"
 import backArrow from "../../../img/back-arrow.png"
 
+const MAX_CATEGORY_LENGTH = 30
+const MAX_AMOUNT = 100000000
+
 export default function NewTransactionModal({ onClose, onSuccess }) {
     const [type, setType] = useState("kiadas")
     const amountRef = useRef()
@@ -17,18 +20,31 @@ export default function NewTransactionModal({ onClose, onSuccess }) {
             return
         }
 
-        const amountValue = Number(amountRef.current.value)
-        const amount = Number.isFinite(amountValue) ? amountValue : 0
         const category = categoryRef.current.value.trim()
+        if (!category) {
+            alert("Add meg a kategoriat.")
+            return
+        }
+        if (category.length > MAX_CATEGORY_LENGTH) {
+            alert("A kategoria tul hosszu.")
+            return
+        }
+
+        const amountValue = Number(amountRef.current.value)
+        if (!Number.isFinite(amountValue) || amountValue <= 0) {
+            alert("Adj meg ervenyes osszeget.")
+            return
+        }
+        if (amountValue > MAX_AMOUNT) {
+            alert("Az osszeg tul nagy.")
+            return
+        }
+        const amount = amountValue
         const dateValue = dateRef.current.value
         const date =
             dateValue && dateValue.trim()
                 ? dateValue
                 : new Date().toISOString().slice(0, 10)
-
-        if (!category || amount <= 0) {
-            return
-        }
 
         addTransaction(token, type, amount, category, date).then((data) => {
             if (onSuccess) {
@@ -79,12 +95,15 @@ export default function NewTransactionModal({ onClose, onSuccess }) {
                     className="transaction-input"
                     type="number"
                     step="1"
+                    min="1"
+                    max={MAX_AMOUNT}
                     placeholder="Összeg"
                     ref={amountRef}
                 />
                 <input
                     className="transaction-input"
                     type="text"
+                    maxLength={MAX_CATEGORY_LENGTH}
                     placeholder="Kategória"
                     ref={categoryRef}
                 />

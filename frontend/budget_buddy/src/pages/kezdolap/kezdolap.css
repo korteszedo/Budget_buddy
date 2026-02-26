@@ -78,6 +78,7 @@
 .hero_kep {
   width: 100%;
   max-width: 560px;
+  max-height: 370px;
   height: auto;
   border-radius: var(--bb-radius-md);
   border: 2px solid var(--bb-border);
