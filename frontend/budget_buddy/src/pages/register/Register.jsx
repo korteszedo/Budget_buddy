@@ -12,7 +12,9 @@ const MAX_USERNAME_LENGTH = 30;
 const MAX_PASSWORD_LENGTH = 64;
 
 
+// register modal
 export function Register({nyit_zar_register}){
+    // modal allapot
     const [loginshow, setLoginshow] = useState(false)
     const navigate = useNavigate()
 
@@ -21,6 +23,7 @@ export function Register({nyit_zar_register}){
     const usernameInput = useRef()
 
 
+    // register kezeles
     function handleClick(){
 
         const emailEl = emailInput.current;

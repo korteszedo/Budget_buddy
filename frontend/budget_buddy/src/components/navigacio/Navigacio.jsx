@@ -5,9 +5,11 @@ import home from "../../img/home.png"
 import exit from "../../img/exit.png"
 import { NavLink, Link, useNavigate } from "react-router-dom"
 
+// fo menu
 export default function Navigacio() {
     const navigate = useNavigate()
 
+    // kilepes
     function handleLogout() {
         localStorage.removeItem("token")
         localStorage.removeItem("userName")

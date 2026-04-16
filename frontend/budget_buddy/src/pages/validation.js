@@ -1,3 +1,4 @@
+// hibauzenetek
 export const validationMessages = {
   emailMissing: "Add meg az email cimet.",
   emailTooLong: "Az email cim tul hosszu.",
@@ -8,6 +9,7 @@ export const validationMessages = {
   passwordTooLong: "A jelszo tul hosszu.",
 };
 
+// login validacio
 export function validateLoginInputs({
   email = "",
   password = "",
@@ -35,6 +37,7 @@ export function validateLoginInputs({
   return null;
 }
 
+// register validacio
 export function validateRegisterInputs({
   email = "",
   username = "",

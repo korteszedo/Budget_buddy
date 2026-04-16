@@ -2,6 +2,7 @@ import "./NewTransactionCard.css"
 import { useState } from "react"
 import NewTransactionModal from "./NewTransactionModal"
 
+// uj kartya
 export default function NewTransactionCard() {
     const [showModal, setShowModal] = useState(false)
 
@@ -15,6 +16,7 @@ export default function NewTransactionCard() {
             >
                 Hozzáad
             </button>
+            {/* frissitesi jel */}
             {showModal && (
                 <NewTransactionModal
                     onClose={() => setShowModal(false)}

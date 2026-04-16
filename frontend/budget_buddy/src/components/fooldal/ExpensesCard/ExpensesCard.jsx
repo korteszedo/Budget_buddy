@@ -2,15 +2,19 @@ import "./ExpensesCard.css"
 import { useEffect, useState } from "react"
 import { getExpensesByCategory } from "../../../fetch"
 
+// penz format
 function formatFt(value) {
     const number = Number(value) || 0
     return `${number.toLocaleString("hu-HU")} Ft`
 }
 
+// kiadas kartya
 export default function ExpensesCard() {
     const [expenses, setExpenses] = useState([])
 
+    // adat toltes
     useEffect(() => {
+        // kiadas lekeres
         function loadExpenses() {
             const token = localStorage.getItem("token")
             if (!token) {
@@ -27,6 +31,7 @@ export default function ExpensesCard() {
             })
         }
 
+        // frissites kezeles
         function handleUpdated() {
             loadExpenses()
         }

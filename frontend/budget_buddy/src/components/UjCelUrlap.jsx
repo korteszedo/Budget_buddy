@@ -8,11 +8,13 @@ import backArrow from "../img/back-arrow.png"
 const MAX_GOAL_NAME_LENGTH = 50
 const MAX_TARGET_AMOUNT = 100000000
 
+// uj cel modal
 export function UjCelUrlap({ nyit_zar, onSuccess }) {
     const nameInput = useRef()
     const targetInput = useRef()
     const dateInput = useRef()
 
+    // cel mentes
     function handleClick() {
         const token = localStorage.getItem("token")
         if (!token) {

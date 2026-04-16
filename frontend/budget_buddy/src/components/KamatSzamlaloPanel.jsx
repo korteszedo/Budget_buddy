@@ -1,16 +1,19 @@
 import "./KamatSzamlaloPanel.css"
 import { useRef, useState } from "react"
 
+// penz format
 function formatFt(value) {
     const number = Number(value) || 0
     return `${number.toLocaleString("hu-HU")} Ft`
 }
 
+// kamat panel
 export default function KamatSzamlaloPanel() {
     const amountRef = useRef()
     const rateRef = useRef()
     const [result, setResult] = useState(0)
 
+    // kamat szamitas
     function handleCalculate() {
         const amountValue = Number(amountRef.current.value)
         const rateValue = Number(rateRef.current.value)

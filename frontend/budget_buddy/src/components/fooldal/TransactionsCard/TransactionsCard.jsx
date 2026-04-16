@@ -2,16 +2,20 @@ import "./TransactionsCard.css"
 import { useEffect, useState } from "react"
 import { getTransactionList } from "../../../fetch"
 
+// penz format
 function formatSignedFt(value, tipus) {
     const safeNumber = Math.abs(Number(value) || 0)
     const sign = tipus === "bevetel" ? "+" : "-"
     return `${sign}${safeNumber.toLocaleString("hu-HU")} Ft`
 }
 
+// lista kartya
 export default function TransactionsCard() {
     const [transactions, setTransactions] = useState([])
 
+    // adat toltes
     useEffect(() => {
+        // lista lekeres
         function loadTransactions() {
             const token = localStorage.getItem("token")
             if (!token) {
@@ -28,6 +32,7 @@ export default function TransactionsCard() {
             })
         }
 
+        // frissites kezeles
         function handleUpdated() {
             loadTransactions()
         }

@@ -8,10 +8,12 @@ import TransactionsCard from "../../components/fooldal/TransactionsCard/Transact
 import ExpensesCard from "../../components/fooldal/ExpensesCard/ExpensesCard"
 import GoalsCard from "../../components/fooldal/GoalsCard/GoalsCard"
 
+// dashboard oldal
 export function Fooldal() {
     const navigate = useNavigate()
     const displayName = localStorage.getItem("userName") || "Vendég"
 
+    // session check
     useEffect(() => {
         const token = localStorage.getItem("token")
         if (!token) {
@@ -26,6 +28,7 @@ export function Fooldal() {
             <main className="fooldal-main">
                 <div className="fooldal-title">Üdvözlünk {displayName}</div>
 
+                {/* hero resz */}
                 <section className="fooldal-hero">
                     <BalanceCard />
                     <NewTransactionCard />
@@ -34,6 +37,7 @@ export function Fooldal() {
 
                 <div className="fooldal-section-title">Áttekintés</div>
 
+                {/* attekintes */}
                 <section className="fooldal-overview">
                     <ExpensesCard />
                     <GoalsCard />

@@ -9,6 +9,7 @@ import logo from "../img/logo.png"
 const MAX_NAME_LENGTH = 50
 const MAX_EMAIL_LENGTH = 100
 
+// admin oldal
 export default function Admin() {
     const [users, setUsers] = useState([])
     const [editingUserId, setEditingUserId] = useState(null)
@@ -17,6 +18,7 @@ export default function Admin() {
     const [isSaving, setIsSaving] = useState(false)
     const navigate = useNavigate()
 
+    // session check
     useEffect(() => {
         const token = localStorage.getItem("token")
         if (!token) {
@@ -29,32 +31,39 @@ export default function Admin() {
         })
     }, [navigate])
 
+    // id olvasas
     function getUserId(user) {
         return user.felhasznalo_id ?? user.userId ?? user.id
     }
 
+    // nev olvasas
     function getUserName(user) {
         return user.nev ?? user.name ?? user.username ?? "Ismeretlen"
     }
 
+    // nev szerkesztes
     function getEditableName(user) {
         return user.nev ?? user.name ?? user.username ?? ""
     }
 
+    // email olvasas
     function getUserEmail(user) {
         return user.email ?? "Nem elérhető"
     }
 
+    // email szerkesztes
     function getEditableEmail(user) {
         return user.email ?? ""
     }
 
+    // edit reset
     function resetEdit() {
         setEditingUserId(null)
         setEditName("")
         setEditEmail("")
     }
 
+    // edit inditas
     function startEdit(user) {
         const userId = getUserId(user)
         if (!userId) {
@@ -66,6 +75,7 @@ export default function Admin() {
         setEditEmail(getEditableEmail(user))
     }
 
+    // user mentes
     function handleSave(userId) {
         const token = localStorage.getItem("token")
         if (!token || !userId) {
@@ -116,6 +126,7 @@ export default function Admin() {
             .finally(() => setIsSaving(false))
     }
 
+    // user torles
     function handleDelete(userId) {
         const token = localStorage.getItem("token")
         if (!token || !userId) {
@@ -132,6 +143,7 @@ export default function Admin() {
         })
     }
 
+    // kilepes
     function handleExit() {
         localStorage.removeItem("token")
         localStorage.removeItem("userName")
@@ -152,6 +164,7 @@ export default function Admin() {
             </header>
 
             <main className="admin-main">
+                {/* desktop lista */}
                 <section className="admin-card admin-card--desktop">
                     <div className="admin-table">
                         <div className="admin-row admin-row--head">
@@ -269,6 +282,7 @@ export default function Admin() {
                     </div>
                 </section>
 
+                {/* mobil lista */}
                 <section className="admin-card admin-card--mobile">
                     <div className="admin-mobile-title">Adatok</div>
                     <div className="admin-mobile-list">

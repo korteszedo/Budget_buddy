@@ -7,15 +7,18 @@ import KamatSzamlaloPanel from "../components/KamatSzamlaloPanel"
 import { UjCelUrlap } from "../components/UjCelUrlap"
 import { deleteGoal, getGoals, updateGoal } from "../fetch"
 
+// tervek oldal
 export default function Tervek() {
     const [goals, setGoals] = useState([])
     const [showGoalModal, setShowGoalModal] = useState(false)
     const navigate = useNavigate()
 
+    // id kivalasztas
     function getGoalId(goal) {
         return goal.cel_id ?? goal.goal_id ?? goal.id ?? null
     }
 
+    // id egyezes
     function matchGoalById(goal, goalId) {
         const currentId = getGoalId(goal)
         if (currentId === null || goalId === null) {
@@ -24,14 +27,17 @@ export default function Tervek() {
         return Number(currentId) === Number(goalId)
     }
 
+    // aktualis ertek
     function getGoalCurrent(goal) {
         return Number(goal.aktualis ?? goal.aktualis_osszeg ?? 0) || 0
     }
 
+    // cel ertek
     function getGoalTarget(goal) {
         return Number(goal.cel ?? goal.osszeg_cel ?? 0) || 0
     }
 
+    // cel allapot
     function isGoalComplete(goal) {
         const target = getGoalTarget(goal)
         if (target <= 0) {
@@ -40,10 +46,12 @@ export default function Tervek() {
         return getGoalCurrent(goal) >= target
     }
 
+    // hatarido olvasas
     function getGoalDeadline(goal) {
         return goal.hatarido ?? goal.deadline ?? goal.datum
     }
 
+    // lista toltes
     function loadGoals() {
         const token = localStorage.getItem("token")
         if (!token) {
@@ -55,6 +63,7 @@ export default function Tervek() {
         })
     }
 
+    // session check
     useEffect(() => {
         const token = localStorage.getItem("token")
         if (!token) {
@@ -65,6 +74,7 @@ export default function Tervek() {
         loadGoals()
     }, [navigate])
 
+    // aktiv celok
     const visibleGoals = goals.filter((goal) => !isGoalComplete(goal))
     const items = visibleGoals
 

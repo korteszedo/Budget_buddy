@@ -1,5 +1,6 @@
 const API_BASE = "http://localhost:3000";
 
+// auth fejlec
 function buildAuthHeaders(token) {
   if (!token) {
     return {};
@@ -9,6 +10,7 @@ function buildAuthHeaders(token) {
   };
 }
 
+// login keres
 export function login(email, password) {
   return fetch(`${API_BASE}/auth/login`, {
     method: "POST",
@@ -27,6 +29,7 @@ export function login(email, password) {
     });
 }
 
+// register keres
 export function register(name, email, password) {
   return fetch(`${API_BASE}/auth/register`, {
     method: "POST",
@@ -46,6 +49,7 @@ export function register(name, email, password) {
     });
 }
 
+// egyenleg keres
 export function getBalance(token) {
   return fetch(`${API_BASE}/transactions/balance`, {
     headers: buildAuthHeaders(token),
@@ -57,6 +61,7 @@ export function getBalance(token) {
     });
 }
 
+// osszegzes keres
 export function getSums(token) {
   return fetch(`${API_BASE}/transactions/sums`, {
     headers: buildAuthHeaders(token),
@@ -69,6 +74,7 @@ export function getSums(token) {
 }
 
 
+// lista keres
 export function getTransactionList(token) {
   return fetch(`${API_BASE}/transactions/list`, {
     headers: buildAuthHeaders(token),
@@ -80,6 +86,7 @@ export function getTransactionList(token) {
     });
 }
 
+// tranzakcio mentes
 export function addTransaction(token, tipus, osszeg, kategoria, datum) {
   return fetch(`${API_BASE}/transactions`, {
     method: "POST",
@@ -101,6 +108,7 @@ export function addTransaction(token, tipus, osszeg, kategoria, datum) {
     });
 }
 
+// kiadasok keres
 export function getExpensesByCategory(token) {
   return fetch(`${API_BASE}/transactions/expenses-by-category`, {
     headers: buildAuthHeaders(token),
@@ -112,6 +120,7 @@ export function getExpensesByCategory(token) {
     });
 }
 
+// cel mentes
 export function addGoal(token, name, target, current, deadline) {
   return fetch(`${API_BASE}/goals`, {
     method: "POST",
@@ -137,6 +146,7 @@ export function addGoal(token, name, target, current, deadline) {
     });
 }
 
+// cel lista
 export function getGoals(token) {
   return fetch(`${API_BASE}/goals`, {
     headers: buildAuthHeaders(token),
@@ -148,6 +158,7 @@ export function getGoals(token) {
     });
 }
 
+// cel frissites
 export function updateGoal(token, goalId, current) {
   return fetch(`${API_BASE}/goals/${goalId}`, {
     method: "PATCH",
@@ -167,6 +178,7 @@ export function updateGoal(token, goalId, current) {
     });
 }
 
+// cel torles
 export function deleteGoal(token, goalId) {
   return fetch(`${API_BASE}/goals/${goalId}`, {
     method: "DELETE",
@@ -179,6 +191,7 @@ export function deleteGoal(token, goalId) {
     });
 }
 
+// user lista
 export function getUsers(token) {
   return fetch(`${API_BASE}/users`, {
     headers: buildAuthHeaders(token),
@@ -190,6 +203,7 @@ export function getUsers(token) {
     });
 }
 
+// user mentes
 export function editUser(token, userId, name, email) {
   return fetch(`${API_BASE}/users/${userId}`, {
     method: "PUT",
@@ -209,6 +223,7 @@ export function editUser(token, userId, name, email) {
     });
 }
 
+// profil mentes
 export function updateUser(token, name, email, password) {
   return fetch(`${API_BASE}/users`, {
     method: "PUT",
@@ -229,6 +244,7 @@ export function updateUser(token, name, email, password) {
     });
 }
 
+// user torles
 export function deleteUser(token, userId) {
   const hasId = typeof userId === "number" || typeof userId === "string";
   const url = hasId ? `${API_BASE}/users/${userId}` : `${API_BASE}/users`;

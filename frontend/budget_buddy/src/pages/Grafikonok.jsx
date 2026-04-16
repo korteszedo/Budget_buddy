@@ -5,21 +5,27 @@ import { useNavigate } from "react-router-dom"
 import Chart from "chart.js/auto"
 import { getTransactionList } from "../fetch"
 import { RANGE_OPTIONS, buildSeries, sum } from "./utils"
+
+// chart szinek
 const COLORS = { income: "#4caf50", expense: "#d65555", line: "#1f4f9c" }
+// alap opciok
 const baseOptions = {
     responsive: true,
     maintainAspectRatio: false,
     animation: false,
     plugins: { legend: { display: false }, tooltip: { enabled: false } },
 }
+// tengely stilus
 const axis = () => ({
     ticks: { color: "#1e1e1e", font: { size: 9 } },
     grid: { color: "rgba(0,0,0,0.1)" },
 })
+// tengely opcio
 const withAxes = () => ({
     ...baseOptions,
     scales: { x: axis(), y: { ...axis(), beginAtZero: true } },
 })
+// grafikon oldal
 export default function Grafikonok() {
     const [transactions, setTransactions] = useState([])
     const [range, setRange] = useState("havi")
@@ -27,6 +33,7 @@ export default function Grafikonok() {
     const lineCanvasRef = useRef(null)
     const pieCanvasRef = useRef(null)
     const navigate = useNavigate()
+    // session check
     useEffect(() => {
         const token = localStorage.getItem("token")
         if (!token) {
@@ -37,12 +44,14 @@ export default function Grafikonok() {
             setTransactions(Array.isArray(data) ? data : [])
         })
     }, [navigate])
+    // adatsorok
     const series = useMemo(
         () => buildSeries(transactions, range),
         [transactions, range]
     )
     const totalIncome = sum(series.income)
     const totalExpense = sum(series.expense)
+    // oszlop chart
     useEffect(() => {
         const canvas = barCanvasRef.current
         if (!canvas) return
@@ -70,6 +79,7 @@ export default function Grafikonok() {
         return () => chart.destroy()
     }, [barCanvasRef, series])
 
+    // vonal chart
     useEffect(() => {
         const canvas = lineCanvasRef.current
         if (!canvas) return
@@ -94,6 +104,7 @@ export default function Grafikonok() {
         return () => chart.destroy()
     }, [lineCanvasRef, series])
 
+    // kor chart
     useEffect(() => {
         const canvas = pieCanvasRef.current
         if (!canvas) return

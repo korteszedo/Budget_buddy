@@ -12,15 +12,18 @@ import back_arrow from "../../img/back-arrow.png"
 const MAX_EMAIL_LENGTH = 100;
 const MAX_PASSWORD_LENGTH = 64;
 
+// login modal
 export function Login({ nyit_zar }) {
 
   const navigate = useNavigate()
 
+  // modal allapot
   const [registershow, setRegistershow] = useState(false)
 
   const emailInput = useRef();
   const passInput = useRef();
 
+  // login kezeles
   function handleClick() {
     const emailEl = emailInput.current;
     const passEl = passInput.current;

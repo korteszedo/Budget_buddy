@@ -11,15 +11,18 @@ import kep3 from "../../img/kep3.png"
 import right_arrow from "../../img/right-arrow.png"
 import registration from "../../img/registration.png"
 
+// kezdolap oldal
 export function Kezdolap() {
   const navigate = useNavigate()
 
   const images = [kep1, kep2, kep3];
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // modal allapot
   const [loginshow, setLoginshow] = useState(false);
   const [registershow, setRegisterShow] = useState(false)
 
+  // session check
   useEffect(() => {
     const token = localStorage.getItem("token")
     if (!token) {
@@ -30,6 +33,7 @@ export function Kezdolap() {
     navigate(roleId === 2 ? "/admin" : "/fooldal", { replace: true })
   }, [navigate])
 
+  // kep lepes
   const nextImage = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
   };

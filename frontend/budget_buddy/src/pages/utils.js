@@ -1,3 +1,4 @@
+// opciok
 export const RANGE_OPTIONS = [
     { id: "napi", label: "Napi", unit: "day", count: 7 },
     { id: "heti", label: "Heti", unit: "week", count: 8 },
@@ -5,14 +6,17 @@ export const RANGE_OPTIONS = [
     { id: "eves", label: "Eves", unit: "year", count: 5 },
 ]
 
+// osszegzes
 export const sum = (values) => values.reduce((acc, value) => acc + value, 0)
 
+// osszeg parse
 export const parseAmount = (value) => {
     const numberValue = Number(value)
     if (!Number.isFinite(numberValue)) return 0
     return Math.abs(numberValue)
 }
 
+// cimke format
 export const formatDateLabel = (date, unit) => {
     if (!(date instanceof Date) || Number.isNaN(date.getTime())) return ""
     if (unit === "day" || unit === "week") {
@@ -30,9 +34,11 @@ export const formatDateLabel = (date, unit) => {
     return ""
 }
 
+// nap eleje
 const startOfDay = (date) =>
     new Date(date.getFullYear(), date.getMonth(), date.getDate())
 
+// het eleje
 const startOfWeek = (date) => {
     const dayIndex = (date.getDay() + 6) % 7
     return startOfDay(
@@ -40,9 +46,12 @@ const startOfWeek = (date) => {
     )
 }
 
+// honap eleje
 const startOfMonth = (date) => new Date(date.getFullYear(), date.getMonth(), 1)
+// ev eleje
 const startOfYear = (date) => new Date(date.getFullYear(), 0, 1)
 
+// datum parse
 const parseDate = (value) => {
     if (!value) return null
     if (typeof value === "string") {
@@ -64,6 +73,7 @@ const parseDate = (value) => {
     return Number.isNaN(date.getTime()) ? null : date
 }
 
+// bucket lista
 const createBuckets = (option, now) => {
     const current = now instanceof Date ? now : new Date(now)
     const buckets = []
@@ -105,6 +115,7 @@ const createBuckets = (option, now) => {
     return buckets
 }
 
+// bucket kulcs
 const getBucketKey = (date, unit) => {
     if (unit === "day") return startOfDay(date).getTime()
     if (unit === "week") return startOfWeek(date).getTime()
@@ -112,6 +123,7 @@ const getBucketKey = (date, unit) => {
     return startOfYear(date).getTime()
 }
 
+// adatsor epites
 export const buildSeries = (transactions, rangeId, now = new Date()) => {
     const option = RANGE_OPTIONS.find((item) => item.id === rangeId)
     if (!option) return { labels: [], income: [], expense: [] }

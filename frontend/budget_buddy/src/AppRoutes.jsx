@@ -4,7 +4,7 @@ import Admin from "./pages/Admin"
 import Tervek from "./pages/Tervek"
 import Grafikonok from "./pages/Grafikonok"
 
-
+// route lista
 const router = [
     {
         path: "/",

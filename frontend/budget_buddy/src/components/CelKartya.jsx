@@ -1,11 +1,13 @@
 import "./CelKartya.css"
 import kuka from "../img/kuka_icon.png"
 
+// penz format
 function formatFt(value) {
     const number = Number(value) || 0
     return `${number.toLocaleString("hu-HU")} Ft`
 }
 
+// datum parse
 function parseDate(value) {
     if (!value) {
         return null
@@ -35,6 +37,7 @@ function parseDate(value) {
     return date
 }
 
+// honap szam
 function getMonthsLeft(deadline) {
     const end = parseDate(deadline)
     if (!end) {
@@ -50,6 +53,7 @@ function getMonthsLeft(deadline) {
     return Math.max(1, diffMonths + 1)
 }
 
+// cel kartya
 export default function CelKartya({
     name,
     current,

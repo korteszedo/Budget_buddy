@@ -8,12 +8,14 @@ import backArrow from "../../../img/back-arrow.png"
 const MAX_CATEGORY_LENGTH = 30
 const MAX_AMOUNT = 100000000
 
+// tranzakcio modal
 export default function NewTransactionModal({ onClose, onSuccess }) {
     const [type, setType] = useState("kiadas")
     const amountRef = useRef()
     const categoryRef = useRef()
     const dateRef = useRef()
 
+    // tranzakcio mentes
     function handleSubmit() {
         const token = localStorage.getItem("token")
         if (!token) {
