@@ -93,7 +93,7 @@ export function Login({ nyit_zar }) {
 
         <input 
           type="email" 
-          placeholder="Email cĂ„â€šĂ‚Â­m" 
+          placeholder="Email" 
           ref={emailInput} 
           className="input" 
           maxLength={MAX_EMAIL_LENGTH}
@@ -102,18 +102,18 @@ export function Login({ nyit_zar }) {
 
         <input 
           type="password" 
-          placeholder="JelszĂ„â€šÄąâ€š" 
+          placeholder="Jelszó" 
           ref={passInput} 
           className="input" 
           maxLength={MAX_PASSWORD_LENGTH}
         />
 
         <button className="login-button" onClick={handleClick}>
-          BejelentkezĂ„â€šĂ‚Â©s
+          Bejelentkezés
         </button>
 
         <p className="no-account" onClick={() => setRegistershow(true)}>
-          MĂ„â€šĂ‚Â©g nincs fiĂ„â€šÄąâ€škod?
+          Még nincs fiókod?
         </p>
       </div>
 

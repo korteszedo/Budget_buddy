@@ -108,16 +108,16 @@ export function Register({nyit_zar_register}){
     
                     <div className="register-content">
                         <img src={userInterface} alt="FelhasznĂ„â€šĂ‹â€ˇlĂ„â€šÄąâ€š" className="user-icon" />
-                        <input type="email" placeholder="Email cĂ„â€šĂ‚Â­m" ref={emailInput} className="input" maxLength={MAX_EMAIL_LENGTH} onInput={(e) => e.currentTarget.setCustomValidity("")} />
-                        <input type="text" placeholder="FelhasznĂ„â€šĂ‹â€ˇlĂ„â€šÄąâ€šnĂ„â€šĂ‚Â©v" ref={usernameInput} className="input" maxLength={MAX_USERNAME_LENGTH} />
-                        <input type="password" placeholder="JelszĂ„â€šÄąâ€š" ref={passInput} className="input" maxLength={MAX_PASSWORD_LENGTH} />
+                        <input type="email" placeholder="Email" ref={emailInput} className="input" maxLength={MAX_EMAIL_LENGTH} onInput={(e) => e.currentTarget.setCustomValidity("")} />
+                        <input type="text" placeholder="Felhasználónév" ref={usernameInput} className="input" maxLength={MAX_USERNAME_LENGTH} />
+                        <input type="password" placeholder="Jelszó" ref={passInput} className="input" maxLength={MAX_PASSWORD_LENGTH} />
     
                         <button className="register-button" onClick={handleClick}>
-                          RegisztrĂ„â€šĂ‹â€ˇciĂ„â€šÄąâ€š
+                          Regisztráció
                         </button>
     
                         <p className="login-account" onClick={()=> setLoginshow(true)}>
-                            MĂ„â€šĂ‹â€ˇr van fiĂ„â€šÄąâ€škod?
+                            Már van fiókod?
                         </p>
                     </div>
                 </div>
